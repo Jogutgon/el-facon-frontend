@@ -1,30 +1,33 @@
 import React from 'react'
-import { Container, Nav, Navbar } from 'react-bootstrap'
+import { Button, Container, Nav, Navbar } from 'react-bootstrap'
 import logo from '../assets/icons/logo.svg'
 
 function Header() {
   return (
     <div>
-      <Navbar expand="lg" className="bg-dark" fixed='top'>
+      <Navbar expand="lg" bg="dark" data-bs-theme="dark" className='justify-content-between text-center' fixed='top'>
       <Container>
         <Navbar.Brand href="#home">
             <img
               src={logo}
-              className="logo-nav d-inline-block align-top"
-              width="90"
+              className="d-inline-block align-top img-fluid"
+              width="100"
               height="40"
               alt="Logo"
             />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav"  />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link className='text-white' href="#home">Quienes somos</Nav.Link>
-            <Nav.Link className='text-white' href="#link">Galeria</Nav.Link>
-            <Nav.Link className='text-white' href="#link">Contacto</Nav.Link>
-            <Nav.Link className='text-white' href="#link">Reservas</Nav.Link>
+            <Nav.Link  href="#quienessomos">Quienes somos</Nav.Link>
+            <Nav.Link href="#galeria">Galeria</Nav.Link>
+            <Nav.Link href="#contacto">Contacto</Nav.Link>
+            <Nav.Link href="#reservas">Reservas</Nav.Link>
           </Nav>
+          <Button variant="outline-primary" className='mx-2'>Iniciar sesion</Button>
+          <Button variant="outline-primary">Registrarse</Button>
         </Navbar.Collapse>
+        
       </Container>
     </Navbar>
     </div>
