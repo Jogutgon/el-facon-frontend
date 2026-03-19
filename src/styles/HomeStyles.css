@@ -1,0 +1,14 @@
+.logo-nav {
+height: 40px;
+width: auto;
+}
+
+.logos{
+  filter: invert(1);
+  height: 35px;
+  width: 35px;
+}
+
+.caja{
+  border: 1px solid red;
+}

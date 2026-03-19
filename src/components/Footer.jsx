@@ -1,5 +1,10 @@
 import React from 'react'
 import logo from '../assets/icons/logo.svg'
+import logof from '../assets/icons/facebook.png'
+import logoi from '../assets/icons/instagram.png'
+import logow from '../assets/icons/whatsapp.png'
+import '../styles/HomeStyles.css'
+
 
 function Footer() {
     return (
@@ -18,14 +23,16 @@ function Footer() {
                                       alt="Logo"
                                     />
                     </div>
-                    <div className="col">
-                        Column
+                    <div className="col d-flex justify-content-around pt-5 align-center">
+                        <img src={logof} alt="logo facebook" className='logos' />
+                        <img src={logoi} alt="logo instagram" className='logos' />
+                        <img src={logow} alt="logo whatsapp" className='logos' />
                     </div>
                 </div>
             </div>
 
-
-            <p className="mb-0">© 2026 Mi sitio</p>
+            <p className='mb-0'>Josefina Gutierrez Gonzalez</p>
+            <p className="mb-0">© 2026</p>
         </footer>
     )
 }
