@@ -23,10 +23,6 @@ function Footer() {
                             <i class="bi bi-clock-history me-1"></i>
                              Lun-Dom 12:00-00:00</p>
                     </div>
-
-
-
-
                     <div className="col d-flex justify-content-center ">
                         <img
                             src={logo}
