@@ -1,11 +1,37 @@
 import React from 'react'
+import { Col, Container, Image, Row } from 'react-bootstrap'
+
 
 function MainSection() {
-  return (
-    <div>
-      
-    </div>
-  )
+    return (
+
+
+        <section className='main-section'>
+            <div className='overlay'>
+                <Row className='justify-content-center align-items-center fira-sans-thin'>
+                    <Col lg={8} className='text-center'>
+                        <h1 className='fira-sans-thin' >¿Quiénes somos?</h1>
+                        <p>
+                            Bienvenidos a Facón, situada en el punto más emblemático de San Javier, Tucumán.
+                            El prestigio de nuestra cocina se sustenta en el legado de generaciones que han
+                            custodiado los secretos del fuego y la tierra.
+                        </p>
+
+                        <p>
+                            Inspirados en el Facón, pieza fundamental de la orfebrería y la destreza gaucha, nuestra identidad se forja bajo los mismos valores:
+                            fuerza, nobleza y una utilidad elevada a la categoría de arte. En nuestro salón, el lujo no es solo un entorno,
+                            sino una experiencia sensorial diseñada para quienes aprecian la identidad argentina en su máxima expresión.
+
+                        </p>
+                    </Col>
+                </Row>
+            </div>
+
+
+
+        </section>
+
+    )
 }
 
 export default MainSection

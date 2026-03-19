@@ -1,8 +1,12 @@
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Section from './components/MainSection';
+import MainSection from './components/MainSection';
+import GalerySection from './components/GalerySection';
+import ContactSection from './components/ContactSection';
+import ReservaSection from './components/ReservaSection';
+
+
 
 function App() {
  
@@ -10,15 +14,13 @@ function App() {
   return (
     <>
       <Header/>
-      <MainSection/>
+      <MainSection />
       <GalerySection/>
       <ContactSection/>
       <ReservaSection/>
       
-      <div style={{ marginTop: "80px" }}>
       <Footer/>
-        
-      </div>
+      {/* <div style={{ marginTop: "80px" }}></div> */}
     </>
   )
 }
