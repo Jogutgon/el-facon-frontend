@@ -6,7 +6,7 @@ function MainSection() {
     return (
 
 
-        <section className='main-section'>
+        <section id='quienes-somos' className='main-section'>
             <div className='overlay'>
                 <Row className='justify-content-center align-items-center fira-sans-thin'>
                     <Col lg={8} className='text-center'>
