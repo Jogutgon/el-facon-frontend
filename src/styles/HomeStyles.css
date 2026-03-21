@@ -30,7 +30,11 @@ body {
   width: 35px;
 }
 
-
+.contact-icon{
+  filter: invert(1);
+  height: 60px;
+  width: auto;
+}
 
 .caja {
   border: 1px solid red;
@@ -72,6 +76,12 @@ body {
   opacity: 0.3;
   
 }
+
+.contact-box{
+  border: 1px solid rgba(255, 255, 255, 0.432);
+}
+
+
 
 /* * {
   border: 1px solid red;
