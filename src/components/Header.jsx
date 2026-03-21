@@ -6,7 +6,7 @@ function Header() {
   return (
     <div>
       <Navbar expand="lg" bg="dark" 
-      data-bs-theme="dark" className='justify-content-between' fixed='top'>
+      data-bs-theme="dark" className='justify-content-between text-center' fixed='top'>
       <Container>
         <Navbar.Brand href="#home">
             <img
