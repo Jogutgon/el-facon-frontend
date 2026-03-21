@@ -18,9 +18,9 @@ function App() {
       <GalerySection/>
       <ContactSection/>
       <ReservaSection/>
-      
       <Footer/>
-      {/* <div style={{ marginTop: "80px" }}></div> */}
+      
+      
     </>
   )
 }

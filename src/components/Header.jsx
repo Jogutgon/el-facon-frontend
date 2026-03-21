@@ -5,7 +5,8 @@ import logo from '../assets/icons/logo.svg'
 function Header() {
   return (
     <div>
-      <Navbar expand="lg" bg="dark" data-bs-theme="dark" className='justify-content-between text-center' fixed='top'>
+      <Navbar expand="lg" bg="dark" 
+      data-bs-theme="dark" className='justify-content-between' fixed='top'>
       <Container>
         <Navbar.Brand href="#home">
             <img
@@ -24,8 +25,10 @@ function Header() {
             <Nav.Link href="#contacto">Contacto</Nav.Link>
             <Nav.Link href="#reservas">Reservas</Nav.Link>
           </Nav>
-          <Button variant="outline-primary" className='mx-2'>Iniciar sesion</Button>
+
+          <Button variant="outline-primary" className='mx-1'>Iniciar sesion</Button>
           <Button variant="outline-primary">Registrarse</Button>
+
         </Navbar.Collapse>
         
       </Container>
