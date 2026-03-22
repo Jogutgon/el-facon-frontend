@@ -8,7 +8,7 @@ import map from '../assets/icons/map.png'
 function ContactSection() {
   return (
     <section id='contacto' className='mt-3 section'>
-      <img className='sep-icn mt-4 d-block mx-auto mt-5' src={separator} alt="separator" />
+      <img className='sep-icn d-block mx-auto mt-5' src={separator} alt="separator" />
       <h2 className='fira-sans-thin text-center pt-5 pb-4'> Contactos </h2>
 
       <Container className='fira-sans-thin mt-4 mb-4 pb-3'>
@@ -23,15 +23,15 @@ function ContactSection() {
             <Row className='d-flex text-center mt-4'> 
               <Col lg={4} md={6} xs={6}>
                 <img src={call} alt="phone" className='img-fluid contact-icon mb-1' />
-                <p>+54 9 381 000 0000</p>
+                <p>+54 9 3810000000</p>
               </Col>
               <Col lg={4} md={6} xs={6} >
                 <img src={mail} alt="mail" className='img-fluid contact-icon mb-1' />
-                <p>restoelfacon@facon.com</p>
+                <p>elfacon@facon.com</p>
               </Col>
               <Col  lg={4} md={6} xs={12} >
                 <img src={map} alt="map" className='img-fluid contact-icon mb-1' />
-                <p>San Javier, Tucumán</p>
+                <p>San Javier-Tucumán</p>
               </Col>
             </Row>
           </Col>
