@@ -8,7 +8,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Footer() {
     return (
-        <footer className="bg-dark text-white text-center">
+        <footer className="bg-dark text-white text-center py-1">
             <div className="container pt-3">
                 <div className="row">
                     <div className="col text-center pt-4 fira-sans-thin">
@@ -42,7 +42,7 @@ function Footer() {
                     </div>
                 </div>
             </div>
-            <p className="col fira-sans-thin flex-column mt-2">© 2026 Josefina Gutierrez Gonzalez. All rights reserved</p>
+            <p className="col fira-sans-thin flex-column mt-3">© 2026 Josefina Gutierrez Gonzalez. All rights reserved</p>
         </footer>
     )
 }

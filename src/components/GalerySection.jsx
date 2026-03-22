@@ -23,9 +23,9 @@ const fila2 = [
 function GalerySection() {
 
   return (
-    <section id='galeria'>
-      <img className='sep-icn mt-4 d-block mx-auto' src={separator} alt="separator" />
-      <h3 className='fira-sans-thin text-center pt-2 pb-3'>Galeria </h3>
+    <section id='galeria' className='section'>
+      <img className='sep-icn mt-4 d-block mx-auto pt-4 pb-3' src={separator} alt="separator" />
+      <h2 className='fira-sans-thin text-center pt-2 pb-3'>Galeria </h2>
       <Container>
         <Row>
           {fila1.map((item, index) => (

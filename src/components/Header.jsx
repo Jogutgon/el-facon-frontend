@@ -8,7 +8,7 @@ function Header() {
       <Navbar expand="lg" bg="dark" 
       data-bs-theme="dark" className='justify-content-between text-center' fixed='top'>
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="#quienes-somos">
             <img
               src={logo}
               className="d-inline-block align-top img-fluid"

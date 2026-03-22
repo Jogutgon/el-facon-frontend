@@ -31,8 +31,8 @@ body {
 }
 
 .section{
-  height: 100%;
-  /* max-height: 1000px; */
+  min-height: 100vh;
+  
 }
 
 .contact-icon{
@@ -74,6 +74,27 @@ body {
   text-align: center;
 }
 
+.reserva-section{
+  background-image: url('../assets/img/9.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  position: relative;
+}
+
+.overlay-reservation{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+background-color: rgba(0, 0, 0, 0.548);
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+
+}
+
 .sep-icn{ 
   width: 100%;
   filter: invert(1);
@@ -84,8 +105,20 @@ body {
 
 .contact-box{
   border: 1px solid rgba(255, 255, 255, 0.432);
+  background-color: rgba(255, 255, 255, 0.123);
+  max-width: 80vh;
+}
+.form-box{
+  max-width: 80vh;
 }
 
+
+@media (max-width: 768px) {
+  .overlay-reservation{
+    align-items: flex-start;
+    padding-top: 80px;
+  }
+}
 
 
 /* * {
