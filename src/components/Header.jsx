@@ -5,9 +5,10 @@ import logo from '../assets/icons/logo.svg'
 function Header() {
   return (
     <div>
-      <Navbar expand="lg" bg="dark" data-bs-theme="dark" className='justify-content-between text-center' fixed='top'>
+      <Navbar expand="lg" bg="dark" 
+      data-bs-theme="dark" className='justify-content-between text-center' fixed='top'>
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="#quienes-somos">
             <img
               src={logo}
               className="d-inline-block align-top img-fluid"
@@ -19,13 +20,15 @@ function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav"  />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link  href="#quienessomos">Quienes somos</Nav.Link>
+            <Nav.Link  href="#quienes-somos">Quienes somos</Nav.Link>
             <Nav.Link href="#galeria">Galeria</Nav.Link>
             <Nav.Link href="#contacto">Contacto</Nav.Link>
             <Nav.Link href="#reservas">Reservas</Nav.Link>
           </Nav>
-          <Button variant="outline-primary" className='mx-2'>Iniciar sesion</Button>
+
+          <Button variant="outline-primary" className='mx-1'>Iniciar sesion</Button>
           <Button variant="outline-primary">Registrarse</Button>
+
         </Navbar.Collapse>
         
       </Container>
