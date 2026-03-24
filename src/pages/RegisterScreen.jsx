@@ -46,7 +46,13 @@ function RegisterScreen() {
 
           </Col>
 
-          <Col className="back-image">
+          <Col className="">
+
+            <div className="register-image">
+              <Container>
+                <h2>Bienvenido</h2>
+              </Container>
+            </div>
           
           
           </Col>

@@ -15,9 +15,9 @@ function App() {
     <>
       
     <Header/>
-    {/* <HomeScreen/> */}
+    <HomeScreen/>
 
-    <RegisterScreen/>
+    {/* <RegisterScreen/> */}
 
     <Footer/> 
       
