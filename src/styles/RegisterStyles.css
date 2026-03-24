@@ -1,35 +1,54 @@
-.register-page{
-  margin-bottom: 80px;
+ .register-page{
+  margin-top: 80px;
   min-height: 100vh;
-  height: 500px;
-}
+  
 
+}
+.col-img{
+  position: relative;
+}
 
 .register-image {
-    background-image: url('../assets/img/10.png');
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-    position: relative;
-
+  background-image: url('../assets/img/10.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100%;
+  position: relative;
 }
 
-
-.overlay-register{
-color: white;
+.register-overlay{
   position: absolute;
-  top:0;
-  left: 0;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
 
-  
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.548);
-  text-align: center;
+}
 
+.register-button{
+  margin-left: 81%;
+}
+
+.register-text{
+  margin-left: 30%;
+}
+
+.caja1{
+  border: 1px solid red;
+}
+
+.caja3 {
+  border: 1px solid green;
+}
+
+.caja2{
+  border: 1px solid blue;
+} 
+.caja4{
+  border: 1px solid orangered;
 }
