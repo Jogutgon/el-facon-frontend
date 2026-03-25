@@ -19,7 +19,7 @@ function App() {
 
     <RegisterScreen/>
 
-    <Footer/> 
+    {/* <Footer/>  */}
       
    {/* prox tarea agregar Rutas --> react-router-dom */}
     </>

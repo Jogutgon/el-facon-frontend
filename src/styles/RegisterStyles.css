@@ -1,7 +1,6 @@
  .register-page{
-  margin-top: 80px;
+  padding-top: 80px;
   min-height: 100vh;
-  
 
 }
 .col-img{
@@ -17,6 +16,7 @@
 }
 
 .register-overlay{
+  color: rgba(255, 255, 255, 0.808);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -30,25 +30,72 @@
   background-color: rgba(0, 0, 0, 0.548);
 }
 
-.register-button{
-  margin-left: 81%;
+/* .copy{
+  position: absolute;
+  display: flex;
+  align-items: end;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+} */
+
+
+/* .register-copyright{
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.8;
+} */
+
+
+.register-copyright{
+  position: absolute;
+  bottom: 10px;
+  right:39px;
+  width: 50%;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.8;
 }
 
-.register-text{
-  margin-left: 30%;
+.logo{
+  max-width: 300px;
+  opacity: 0.8;
 }
 
-.caja1{
-  border: 1px solid red;
+.container-form{
+  max-width: 400px;
+  width: 100%;
 }
 
-.caja3 {
-  border: 1px solid green;
-}
 
-.caja2{
+
+/* * {
   border: 1px solid blue;
-} 
-.caja4{
-  border: 1px solid orangered;
+} */
+
+
+@media (max-width: 991px) {
+  .register-image{
+    display: none;
+  }
+  .register-page h3{
+    margin-top: 50px;
+    text-align: center;
+  }
+  .register-page form {
+    padding: 10px;
+  }
+  .login-link{
+    margin-top: 30px;
+  }
+  .register-copyright{
+    position: static;
+    width: 100%;
+    margin-top: 50px;
+    text-align: center;
+  }
+
 }
