@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomeScreen from './pages/HomeScreen';
 import RegisterScreen from './pages/RegisterScreen';
+import LoginScreen from './pages/LoginScreen';
 
 
 
@@ -17,7 +18,9 @@ function App() {
     <Header/>
     {/* <HomeScreen/> */}
 
-    <RegisterScreen/>
+    {/* <RegisterScreen/> */}
+
+    <LoginScreen/>
 
     {/* <Footer/>  */}
       
