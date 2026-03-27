@@ -8,7 +8,7 @@ function Header() {
       <Navbar expand="lg" bg="dark" 
       data-bs-theme="dark" className='justify-content-between text-center' fixed='top'>
       <Container>
-        <Navbar.Brand href="#quienes-somos">
+        <Navbar.Brand href="/">
             <img
               src={logo}
               className="d-inline-block align-top img-fluid"
@@ -26,8 +26,8 @@ function Header() {
             <Nav.Link href="#reservas">Reservas</Nav.Link>
           </Nav>
 
-          <Button variant="outline-primary" className='mx-1'>Iniciar sesion</Button>
-          <Button variant="outline-primary">Registrarse</Button>
+          <Button variant="outline-primary" className='mx-1' href='/login' >Iniciar sesion</Button>
+          <Button variant="outline-primary" href='/register' >Registrarse</Button>
 
         </Navbar.Collapse>
         

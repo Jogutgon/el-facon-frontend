@@ -40,7 +40,7 @@ function RegisterScreen() {
           </Form>
           <div className="d-flex justify-content-center pt-2 login-link">
             <p className="d-inline me-1 register-text">¿Ya tienes cuenta?</p>
-            <a href="">Inicia sesión</a>
+            <a href="/login">Inicia sesión</a>
           </div>
         </Col>
 

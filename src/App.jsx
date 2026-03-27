@@ -21,7 +21,7 @@ function App() {
 
           <Routes>
             <Route path='/' element={<HomeScreen/>}  />
-            <Route path='/login'  element={<LoginScreen/>}  />
+            <Route path='/login' element={<LoginScreen/>}  />
             <Route path='/register' element={<RegisterScreen/>}  /> 
 
           </Routes>

@@ -28,7 +28,7 @@ function LoginScreen() {
           </Form>
           <div className="d-flex justify-content-center pt-5 login-link">
             <p className="d-inline me-1">¿Aún no tienes cuenta?</p>
-            <a href="">Registrarse</a>
+            <a href="/register">Registrarse</a>
           </div>
         </Col>
 
