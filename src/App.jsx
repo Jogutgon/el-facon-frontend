@@ -4,7 +4,7 @@ import Footer from './components/Footer';
 import HomeScreen from './pages/HomeScreen';
 import RegisterScreen from './pages/RegisterScreen';
 import LoginScreen from './pages/LoginScreen';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
 
@@ -14,17 +14,29 @@ function App() {
  
   return (
     <>
+
+      <BrowserRouter>
       
     <Header/>
-    {/* <HomeScreen/> */}
 
-    {/* <RegisterScreen/> */}
+          <Routes>
+            <Route path='/' element={<HomeScreen/>}  />
+            <Route path='/login'  element={<LoginScreen/>}  />
+            <Route path='/register' element={<RegisterScreen/>}  /> 
 
-    <LoginScreen/>
+          </Routes>
+          <Footer/> 
+    
 
-    {/* <Footer/>  */}
+    
+
+    
+
+    
+      </BrowserRouter>
       
-   {/* prox tarea agregar Rutas --> react-router-dom */}
+      
+   
     </>
   )
 }
