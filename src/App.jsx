@@ -5,13 +5,16 @@ import HomeScreen from './pages/HomeScreen';
 import RegisterScreen from './pages/RegisterScreen';
 import LoginScreen from './pages/LoginScreen';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-
+import { useState } from 'react';
 
 
 
 function App() {
  
+  const [jwt, setJwt] = useState("")
+  const [isAdmin, setIsAdmin] = useState(false)
+
+
   return (
     <>
 
@@ -26,13 +29,7 @@ function App() {
 
           </Routes>
           <Footer/> 
-    
-
-    
-
-    
-
-    
+      
       </BrowserRouter>
       
       
