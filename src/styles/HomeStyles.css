@@ -129,6 +129,11 @@ text-align: center;
   border: 1px solid red;
 } */
 
+.box{
+  min-height: 100vh;
+  border: 2px solid blue;
+  padding: 80px;
+}
 
 
 
