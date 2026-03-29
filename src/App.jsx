@@ -18,8 +18,6 @@ function App() {
 
   const verifyAdmin = () => {
     try {
-      const jwtFromLogin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YzgxM2M5MTQyZDgwNjFmZjYyMmY2MiIsInVzZXJuYW1lIjoiYWRtaW5pc3RyYXRvcjEiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3NzQ3NTg2ODB9.cOQJixbVeL9_xkmYGjjtezYZmHNjZuQnGgYX-8V1VG8"
-      // const jwtFromLogin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Yzg2YzU3MTAzNDE3MDkyMzcyYjg0ZCIsInVzZXJuYW1lIjoidXN1YXJpbzEiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzc0NzQyNjcxfQ.LIU_zP5SUjK-P_I5I-NKXiSmaQrz5xOJTdVaLqvjZuE"
       const decodedToken = jwtDecode(jwtFromLogin)
       setJwt(jwtFromLogin)
       setAdmin(decodedToken.isAdmin)
@@ -29,11 +27,15 @@ function App() {
 
   }
 
+  const changeJwt = (value) => {
+    setJwt(value)
+  }
+
 
 
   useEffect(() => {
     verifyAdmin()
-  }, [])
+  }, [jwt])
   
   
 
@@ -49,7 +51,7 @@ function App() {
 
           <Routes>
             <Route path='/' element={<HomeScreen/>}  />
-            <Route path='/login' element={<LoginScreen/>}  />
+            <Route path='/login' element={<LoginScreen changeJwt={changeJwt} />}  />
             <Route path='/register' element={<RegisterScreen/>}  /> 
             <Route path='/admin/*' element={<AdminRouter show={jwt.length > 0 && admin === true}/>} />
             <Route path='/user/*' element={<UserRouter show={jwt.length > 0} />} />

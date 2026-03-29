@@ -1,17 +1,36 @@
-
+import PropTypes from 'prop-types'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import '../styles/LoginStyles.css'
 import logo from '../assets/icons/logo.svg'
 import { useState } from 'react'
 
-function LoginScreen() {
+
+function LoginScreen({ changeJwt }) {
 
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
   const handleLogin = () => {
-    console.log(username)
-    console.log(password)
+    
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      username: username,
+      password: password,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+
+    fetch("http://localhost:7000/auth/login", requestOptions)
+      .then((response) => response.json())
+      .then((result) => changeJwt(result.access_token))
+      .catch((error) => console.error(error));
   }
 
 
@@ -25,29 +44,31 @@ function LoginScreen() {
           <Form className="d-flex flex-column" onSubmit={(event) => event.preventDefault()} >
             <Form.Group className="mb-3 mt-4" controlId="formBasicUsername">
               <Form.Label>Usuario</Form.Label>
-              <Form.Control 
-              type="username" 
-              placeholder="Ingresa tu nombre de usuario"
-              onChange={(event) => setUsername(event.target.value)}
-              value={username} />
+              <Form.Control
+                type="username"
+                placeholder="Ingresa tu nombre de usuario"
+                onChange={(event) => setUsername(event.target.value)}
+                value={username} />
             </Form.Group>
-            
+
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Contraseña</Form.Label>
-              <Form.Control 
-              type="password" 
-              placeholder="Ingresa tu contraseña" 
-              onChange={(event) => setPassword(event.target.value)}
-              value={password}/>
+              <Form.Control
+                type="password"
+                placeholder="Ingresa tu contraseña"
+                onChange={(event) => setPassword(event.target.value)}
+                value={password} />
             </Form.Group>
 
             <div className="d-flex justify-content-end">
               <Button className="mt-3" variant="success" type="submit"
-              onClick={handleLogin}>
+                onClick={handleLogin}>
                 Iniciar Sesión
               </Button>
             </div>
           </Form>
+
+
           <div className="d-flex justify-content-center pt-5 login-link">
             <p className="d-inline me-1">¿Aún no tienes cuenta?</p>
             <a href="/register">Registrarse</a>
@@ -65,10 +86,15 @@ function LoginScreen() {
         </Col>
       </Row>
       <div className="login-copyright">
-              <p>© 2026 Josefina Gutierrez Gonzalez.</p>
-            </div>
+        <p>© 2026 Josefina Gutierrez Gonzalez.</p>
+      </div>
     </Container>
   )
 }
+
+LoginScreen.propTypes = {
+  changeJwt: PropTypes.func.isRequired
+}
+
 
 export default LoginScreen
