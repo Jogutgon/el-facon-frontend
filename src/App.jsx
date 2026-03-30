@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import AdminRouter from './router/AdminRouter';
 import UserRouter from './router/UserRouter';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
       const decodedToken = jwtDecode(jwt)
       setAdmin(decodedToken.isAdmin)
       console.log("Se inicio sesion", decodedToken.username)
-    } catch (error){
+    } catch (error) {
       console.error("Error decoding JWT:", error)
     }
 
@@ -37,31 +38,36 @@ function App() {
   useEffect(() => {
     verifyAdmin()
   }, [jwt])
-  
-  
+
+
 
 
   return (
     <>
 
       <BrowserRouter>
-      
-      <Header authenticated={!!jwt}  admin={admin} changeJwt={changeJwt} />
 
-          <Routes>
-            <Route path='/' element={<HomeScreen/>}  />
-            <Route path='/login' element={<LoginScreen changeJwt={changeJwt} />}  />
-            <Route path='/register' element={<RegisterScreen/>}  /> 
-            <Route path='/admin/*' element={<AdminRouter show={jwt.length > 0 && admin === true}/>} />
-            <Route path='/user/*' element={<UserRouter show={jwt.length > 0} />} />
+        <Header authenticated={!!jwt} admin={admin} changeJwt={changeJwt} />
 
-          </Routes>
-          <Footer/> 
-      
+        <Routes>
+          <Route path='/' element={<HomeScreen />} />
+          <Route path='/login' element={<LoginScreen changeJwt={changeJwt} />} />
+          <Route path='/register' element={<RegisterScreen />} />
+          <Route path='/admin/*'
+            element={<ProtectedRoute isAllowed={jwt.length > 0 && admin}>
+              <AdminRouter />
+            </ProtectedRoute>} />
+          <Route path='/user/*' element={<ProtectedRoute isAllowed={jwt.length > 0 && admin}>
+            <UserRouter/>
+          </ProtectedRoute>} />
+
+        </Routes>
+        <Footer />
+
       </BrowserRouter>
-      
-      
-   
+
+
+
     </>
   )
 }
