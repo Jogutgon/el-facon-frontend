@@ -13,14 +13,14 @@ import UserRouter from './router/UserRouter';
 
 function App() {
 
-  const [jwt, setJwt] = useState("")
+  const [jwt, setJwt] = useState(localStorage.getItem("token") || "")
   const [admin, setAdmin] = useState(false)
 
   const verifyAdmin = () => {
     try {
-      const decodedToken = jwtDecode(jwtFromLogin)
-      setJwt(jwtFromLogin)
+      const decodedToken = jwtDecode(jwt)
       setAdmin(decodedToken.isAdmin)
+      console.log("Se inicio sesion", decodedToken.username)
     } catch (error){
       console.error("Error decoding JWT:", error)
     }
@@ -29,6 +29,7 @@ function App() {
 
   const changeJwt = (value) => {
     setJwt(value)
+    localStorage.setItem("token", value)
   }
 
 
@@ -43,11 +44,9 @@ function App() {
   return (
     <>
 
-     
-
       <BrowserRouter>
       
-    <Header/>
+      <Header authenticated={!!jwt}  admin={admin} changeJwt={changeJwt} />
 
           <Routes>
             <Route path='/' element={<HomeScreen/>}  />
