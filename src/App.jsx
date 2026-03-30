@@ -57,7 +57,7 @@ function App() {
             element={<ProtectedRoute isAllowed={jwt.length > 0 && admin}>
               <AdminRouter />
             </ProtectedRoute>} />
-          <Route path='/user/*' element={<ProtectedRoute isAllowed={jwt.length > 0 && admin}>
+          <Route path='/user/*' element={<ProtectedRoute isAllowed={jwt.length > 0}>
             <UserRouter />
           </ProtectedRoute>} />
 
