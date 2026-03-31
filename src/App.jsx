@@ -30,7 +30,12 @@ function App() {
 
   const changeJwt = (value) => {
     setJwt(value)
-    localStorage.setItem("token", value)
+    // localStorage.setItem("token", value)
+    if(value) {
+      localStorage.setItem("token", value)
+    } else {
+      localStorage.removeItem("token")
+    }
   }
 
   useEffect(() => {

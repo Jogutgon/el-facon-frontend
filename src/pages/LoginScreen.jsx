@@ -109,9 +109,11 @@ function LoginScreen({ changeJwt }) {
             <div className="login-overlay">
               <h1 className="">¡Bienvenido!</h1>
               <img src={logo} alt="logo" className="img-fluid logo" />
+              
+        
+      
             </div>
           </div>
-
         </Col>
       </Row>
       <div className="login-copyright">

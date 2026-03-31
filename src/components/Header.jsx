@@ -2,14 +2,18 @@ import { Link } from 'react-router-dom';
 import { Button, Container, Nav, Navbar } from 'react-bootstrap'
 import logo from '../assets/icons/logo.svg'
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 function Header({ authenticated = false, admin = false, changeJwt }) {
+
+  const navigate = useNavigate();
+  
   return (
     <div>
       <Navbar expand="lg" bg="dark" variant='dark'
       data-bs-theme="dark" className='justify-content-between text-center' fixed='top'>
       <Container>
-        <Navbar.Brand href="/">
+        <Navbar.Brand as={Link} to='/'>
             <img
               src={logo}
               className="d-inline-block align-top img-fluid"
@@ -55,7 +59,11 @@ function Header({ authenticated = false, admin = false, changeJwt }) {
                   <Button variant="outline-primary" as={Link} to='/register' >Registrarse</Button>
                 </>
               ) : ( 
-                  <Button variant="btn btn-link" onClick={() => changeJwt("")} >Cerrar sesion</Button> 
+                  <Button variant="btn btn-link" 
+                  onClick={() => {
+                    changeJwt("");
+                    navigate("/login");}
+                  } >Cerrar sesion</Button> 
           )
         }
           
