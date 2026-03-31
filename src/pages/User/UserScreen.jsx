@@ -3,7 +3,7 @@ import React from 'react'
 function UserScreen() {
   return (
     <div className='box'>
-        <h1 className='text-white'>Pag del usuario</h1>
+        <h1 className='text-white my-5'>Pag del usuario</h1>
       
     </div>
   )

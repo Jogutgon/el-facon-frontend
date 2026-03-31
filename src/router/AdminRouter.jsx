@@ -6,7 +6,7 @@ import AdminScreen from '../pages/Admin/AdminScreen'
 function AdminRouter() {
   return ( 
     <Routes>
-      <Route path='/admin' element={<AdminScreen/>} />
+      <Route path='/' element={<AdminScreen/>} />
     </Routes>
   )
 }

@@ -6,7 +6,7 @@ import UserScreen from '../pages/User/UserScreen'
 function UserRouter() {
   return (
     <Routes>
-      <Route path='/user' element={<UserScreen/>}  />
+      <Route path='/' element={<UserScreen/>}  />
     </Routes>
   )
 }

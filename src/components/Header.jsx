@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 import { Button, Container, Nav, Navbar } from 'react-bootstrap'
 import logo from '../assets/icons/logo.svg'
 import PropTypes from 'prop-types';
@@ -33,15 +33,15 @@ function Header({ authenticated = false, admin = false, changeJwt }) {
           {
               authenticated && admin && (
               <> 
-                <Nav.Link className='' href="#panel">Panel Admin</Nav.Link>
-                <Nav.Link href="#user">users</Nav.Link>
-                <Nav.Link href="#reserva">reservas</Nav.Link></>
+                <Nav.Link as={Link} to="" >Panel Admin</Nav.Link>
+                <Nav.Link as={Link} to="" >Usuarios</Nav.Link>
+                <Nav.Link as={Link} to="" >Reservas</Nav.Link></>
                )
             }
 
             {
               authenticated && !admin && (
-                <Nav.Link href="#misreservas">Mis reservas</Nav.Link>
+                <Nav.Link as={Link} to="" >Mis reservas</Nav.Link>
               )
             }
             </Nav>
@@ -51,8 +51,8 @@ function Header({ authenticated = false, admin = false, changeJwt }) {
           { 
               authenticated === false ? ( 
                 <>
-                  <Button variant="outline-primary" className='mx-1' href='/login' >Iniciar sesion</Button>
-                  <Button variant="outline-primary" href='/register' >Registrarse</Button>
+                  <Button variant="outline-primary" className='mx-1' as={Link} to='/login' >Iniciar sesion</Button>
+                  <Button variant="outline-primary" as={Link} to='/register' >Registrarse</Button>
                 </>
               ) : ( 
                   <Button variant="btn btn-link" onClick={() => changeJwt("")} >Cerrar sesion</Button> 
@@ -68,7 +68,7 @@ function Header({ authenticated = false, admin = false, changeJwt }) {
   )
 }
 
-Header.PropTypes = {
+Header.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   admin: PropTypes.bool.isRequired,
   changeJwt: PropTypes.func.isRequired

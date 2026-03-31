@@ -4,7 +4,7 @@ import Footer from './components/Footer';
 import HomeScreen from './pages/HomeScreen';
 import RegisterScreen from './pages/RegisterScreen';
 import LoginScreen from './pages/LoginScreen';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import AdminRouter from './router/AdminRouter';
@@ -21,7 +21,7 @@ function App() {
     try {
       const decodedToken = jwtDecode(jwt)
       setAdmin(decodedToken.isAdmin)
-      console.log("Se inicio sesion", decodedToken.username)
+      console.log("Se inicio sesion", decodedToken.email)
     } catch (error) {
       console.error("Error decoding JWT:", error)
     }
@@ -33,12 +33,9 @@ function App() {
     localStorage.setItem("token", value)
   }
 
-
-
   useEffect(() => {
     verifyAdmin()
   }, [jwt])
-
 
 
 
@@ -62,7 +59,7 @@ function App() {
           </ProtectedRoute>} />
 
         </Routes>
-        <Footer />
+        <Footer authenticated={!!jwt} />
 
       </BrowserRouter>
 
