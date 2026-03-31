@@ -4,10 +4,16 @@ import logoi from '../assets/icons/instagram.png'
 import logow from '../assets/icons/whatsapp.png'
 import '../styles/HomeStyles.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import PropTypes from 'prop-types';
 
 
-function Footer() {
+function Footer({ authenticated = false}) {
+    
+    if(authenticated) return null;
+
     return (
+
+        
         <footer className="bg-dark text-white text-center py-3">
             <div className="container">
                 <div className="row align-items-center">
@@ -44,6 +50,10 @@ function Footer() {
             <p className="mt-4 mb-0 fira-sans-thin">© 2026 Josefina Gutierrez Gonzalez. All rights reserved</p>
         </footer>
     )
+}
+
+Footer.prototype = {
+    authenticated: PropTypes.bool.isRequired
 }
 
 export default Footer
