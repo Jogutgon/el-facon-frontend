@@ -1,14 +1,19 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 import { Button, Container, Nav, Navbar } from 'react-bootstrap'
 import logo from '../assets/icons/logo.svg'
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
-function Header() {
+function Header({ authenticated = false, admin = false, changeJwt }) {
+
+  const navigate = useNavigate();
+  
   return (
     <div>
-      <Navbar expand="lg" bg="dark" 
+      <Navbar expand="lg" bg="dark" variant='dark'
       data-bs-theme="dark" className='justify-content-between text-center' fixed='top'>
       <Container>
-        <Navbar.Brand href="#quienes-somos">
+        <Navbar.Brand as={Link} to='/'>
             <img
               src={logo}
               className="d-inline-block align-top img-fluid"
@@ -24,10 +29,44 @@ function Header() {
             <Nav.Link href="#galeria">Galeria</Nav.Link>
             <Nav.Link href="#contacto">Contacto</Nav.Link>
             <Nav.Link href="#reservas">Reservas</Nav.Link>
+            
           </Nav>
 
-          <Button variant="outline-primary" className='mx-1'>Iniciar sesion</Button>
-          <Button variant="outline-primary">Registrarse</Button>
+
+          <Nav className='me-auto'>
+          {
+              authenticated && admin && (
+              <> 
+                <Nav.Link as={Link} to="" >Panel Admin</Nav.Link>
+                <Nav.Link as={Link} to="" >Usuarios</Nav.Link>
+                <Nav.Link as={Link} to="" >Reservas</Nav.Link></>
+               )
+            }
+
+            {
+              authenticated && !admin && (
+                <Nav.Link as={Link} to="" >Mis reservas</Nav.Link>
+              )
+            }
+            </Nav>
+
+
+
+          { 
+              authenticated === false ? ( 
+                <>
+                  <Button variant="outline-primary" className='mx-1' as={Link} to='/login' >Iniciar sesion</Button>
+                  <Button variant="outline-primary" as={Link} to='/register' >Registrarse</Button>
+                </>
+              ) : ( 
+                  <Button variant="btn btn-link" 
+                  onClick={() => {
+                    changeJwt("");
+                    navigate("/login");}
+                  } >Cerrar sesion</Button> 
+          )
+        }
+          
 
         </Navbar.Collapse>
         
@@ -35,6 +74,12 @@ function Header() {
     </Navbar>
     </div>
   )
+}
+
+Header.propTypes = {
+  authenticated: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired,
+  changeJwt: PropTypes.func.isRequired
 }
 
 export default Header
