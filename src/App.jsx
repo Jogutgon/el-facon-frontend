@@ -61,7 +61,7 @@ function App() {
             </ProtectedRoute>} />
           <Route path='/user/*' 
           element={<ProtectedRoute isAllowed={jwt.length > 0}>
-            <UserRouter />
+            <UserRouter jwt={jwt} />
           </ProtectedRoute>} />
 
         </Routes>

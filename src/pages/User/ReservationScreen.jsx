@@ -3,15 +3,24 @@ import '../../styles/ReservationStyles.css'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import axios from 'axios'
 
-function ReservationScreen() {
+function ReservationScreen( {jwt}) {
 
   const [date, setDate] = useState("")
   const [time, setTime] = useState("")
   const [guests, setGuests] = useState("")
 
 
-const handleSubtmitForm = (event) => {
+const handleSubtmitForm = async (event) => {
   event.preventDefault()
+
+  
+
+  try {
+    
+
+  } catch (error) {
+    
+  }
 
 }
 

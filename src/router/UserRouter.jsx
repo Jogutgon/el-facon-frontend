@@ -8,12 +8,12 @@ import AllReservationScreen from '../pages/User/AllReservationScreen'
 
 
 
-function UserRouter() {
+function UserRouter( {jwt}) {
   return (
     <Routes>
-      <Route path='/' element={<UserScreen/>}  />
-      <Route path='/reservations' element={<AllReservationScreen/>} />
-      <Route path='/reservations/new' element={<ReservationScreen/>} />
+      <Route path='/' element={<UserScreen />}  />
+      <Route path='/reservations' element={<AllReservationScreen />} />
+      <Route path='/reservations/new' element={<ReservationScreen jwt={jwt}/>} />
       
     </Routes>
   )
