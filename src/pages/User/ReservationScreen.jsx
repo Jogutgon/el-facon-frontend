@@ -10,7 +10,8 @@ function ReservationScreen() {
   const [guests, setGuests] = useState("")
 
 
-const handleSubtmitForm = () => {
+const handleSubtmitForm = (event) => {
+  event.preventDefault()
 
 }
 
@@ -25,17 +26,20 @@ const handleSubtmitForm = () => {
       <Row > 
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label>Selecciona una fecha</Form.Label>
-          <Form.Control type="date" value={date}  />
+          <Form.Control type="date" value={date} 
+          onChange={(e) => setDate(e.target.value)} />
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label>Horario</Form.Label>
-          <Form.Control type="time" value={time}  />
+          <Form.Control type="time" value={time} 
+          onChange={(e)=> setTime(e.target.value)} />
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridState">
           <Form.Label>Comensales</Form.Label>
-          <Form.Control type='number' value={guests} min={2} max={12} />
+          <Form.Control type='number' value={guests} min={2} max={12}
+          onChange={(e) =>setGuests(e.target.value)} />
         </Form.Group>
       </Row>
       <div className='d-flex justify-content-center mt-5'>
