@@ -45,7 +45,11 @@ function Header({ authenticated = false, admin = false, changeJwt }) {
 
             {
               authenticated && !admin && (
-                <Nav.Link as={Link} to="" >Mis reservas</Nav.Link>
+                <>
+                <Nav.Link as={Link} to="/user" >Panel</Nav.Link>
+                <Nav.Link as={Link} to="/user/reservations" >Mis Reservas</Nav.Link>
+                <Nav.Link as={Link} to="/user/reservations/new" >Reservar</Nav.Link>
+                </>
               )
             }
             </Nav>
