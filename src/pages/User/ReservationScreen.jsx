@@ -8,11 +8,11 @@ function ReservationScreen({ jwt }) {
   const [date, setDate] = useState("")
   const [time, setTime] = useState("")
   const [guests, setGuests] = useState("")
+  const [availability, setAvailability] = useState([])
 
 
   const handleSubtmitForm = async (event) => {
     event.preventDefault()
-
 
     try {
 
