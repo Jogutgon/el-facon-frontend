@@ -10,10 +10,12 @@ function ReservationScreen({ jwt }) {
   const [guests, setGuests] = useState("")
   const [availability, setAvailability] = useState([])
 
+  const isAvailable = async (selectDate) => {
+    
+  }
 
   const handleSubtmitForm = async (event) => {
     event.preventDefault()
-
     try {
 
       const response = await axios.post(
@@ -52,7 +54,13 @@ function ReservationScreen({ jwt }) {
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Selecciona una fecha</Form.Label>
             <Form.Control type="date" value={date}
-              onChange={(e) => setDate(e.target.value)} required />
+              onChange={(e) => {
+                const selectDate = e.target.value
+                setDate(selectDate);
+                isAvailable(selectDate);
+
+              }} 
+              required />
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridState">
