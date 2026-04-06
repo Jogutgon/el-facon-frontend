@@ -11,7 +11,22 @@ function ReservationScreen({ jwt }) {
   const [availability, setAvailability] = useState([])
 
   const isAvailable = async (selectDate) => {
-    
+    try {
+      
+      const response = await axios.get( 
+        `http://localhost:7000/reservation/availability?date=${selectDate}`,
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      }
+      );
+
+      setAvailability(response.data);
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const handleSubtmitForm = async (event) => {
@@ -55,7 +70,7 @@ function ReservationScreen({ jwt }) {
             <Form.Label>Selecciona una fecha</Form.Label>
             <Form.Control type="date" value={date}
               onChange={(e) => {
-                const selectDate = e.target.value
+                const selectDate = e.target.value;
                 setDate(selectDate);
                 isAvailable(selectDate);
 
@@ -63,14 +78,36 @@ function ReservationScreen({ jwt }) {
               required />
           </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridState">
+
+          <Form.Group as={Col}>
+            <Form.Label>Selecciona un horario</Form.Label>
+            <Form.Select value={time} 
+            onChange={(e) => setTime(e.target.value)}
+            required>
+
+            <option value=""> Horarios </option>
+              {
+                availability.map((slot) => (
+                  <option 
+                  key={slot.time}
+                  value={slot.time}
+                  disabled={!slot.available}
+                  
+                  > {slot.time} {slot.available ? "" : "(No disponible)" } </option>
+                ) )
+              }
+
+          </Form.Select>
+          </Form.Group>
+
+          {/* <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Horario</Form.Label>
             <Form.Control type="time" value={time}
               onChange={(e) => setTime(e.target.value)} required />
-          </Form.Group>
+          </Form.Group> */}
 
           <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>Comensales</Form.Label>
+            <Form.Label>Número de comensales</Form.Label>
             <Form.Control type='number' value={guests} min={2} max={12}
               onChange={(e) => setGuests(e.target.value)} required />
           </Form.Group>
