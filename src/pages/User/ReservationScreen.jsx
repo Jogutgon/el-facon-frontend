@@ -8,12 +8,29 @@ function ReservationScreen({ jwt }) {
   const [date, setDate] = useState("")
   const [time, setTime] = useState("")
   const [guests, setGuests] = useState("")
+  const [availability, setAvailability] = useState([])
 
+  const isAvailable = async (selectDate) => {
+    try {
+
+      const response = await axios.get(
+        `http://localhost:7000/reservation/availability?date=${selectDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          }
+        }
+      );
+
+      setAvailability(response.data);
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleSubtmitForm = async (event) => {
     event.preventDefault()
-
-
     try {
 
       const response = await axios.post(
@@ -26,11 +43,9 @@ function ReservationScreen({ jwt }) {
         }
       );
 
-
       setDate("");
       setTime("");
       setGuests("");
-
 
     } catch (error) {
       console.error(error);
@@ -39,6 +54,23 @@ function ReservationScreen({ jwt }) {
 
   }
 
+  const getToday = () => {
+    const today = new Date()
+    return today.toJSON().split("T")[0]
+  }
+
+  const getMaxDate = () => {
+    const max = new Date()
+    max.setDate(max.getDate() + 3)
+    return max.toJSON().split("T")[0]
+  }
+
+  const isPastHour = (time) => {
+    if (!date) return false;
+    const now = new Date();
+    const selectDateTime = new Date(`${date}T${time}`);
+    return selectDateTime < now
+  }
 
 
   return (
@@ -51,18 +83,42 @@ function ReservationScreen({ jwt }) {
         <Row >
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Selecciona una fecha</Form.Label>
-            <Form.Control type="date" value={date}
-              onChange={(e) => setDate(e.target.value)} required />
+            <Form.Control type="date"
+              value={date} min={getToday()} max={getMaxDate()}
+              onChange={(e) => {
+                const selectDate = e.target.value;
+                setDate(selectDate);
+                isAvailable(selectDate);
+
+              }}
+              required />
+          </Form.Group>
+
+          <Form.Group as={Col}>
+            <Form.Label>Selecciona un horario</Form.Label>
+            <Form.Select value={time}
+              onChange={(e) => setTime(e.target.value)}
+              required>
+
+              <option value=""> Horarios </option>
+              {
+                availability.filter(hour => !isPastHour(hour.time))
+                .map((hour) => (
+                    <option
+                      key={hour.time}
+                      value={hour.time}
+                      disabled={!hour.available}
+
+                    > {hour.time} {!hour.available ? "(Reservado)" : ""} </option>
+                  )
+                )
+              }
+
+            </Form.Select>
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>Horario</Form.Label>
-            <Form.Control type="time" value={time}
-              onChange={(e) => setTime(e.target.value)} required />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>Comensales</Form.Label>
+            <Form.Label>Número de comensales</Form.Label>
             <Form.Control type='number' value={guests} min={2} max={12}
               onChange={(e) => setGuests(e.target.value)} required />
           </Form.Group>
