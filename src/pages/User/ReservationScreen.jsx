@@ -61,13 +61,13 @@ const getToday = () => {
   return today.toJSON().split("T")[0]
 }
 
-const maxDate = () => {
+const getMaxDate = () => {
   const max = new Date()
   max.setDate(max.getDate() + 3)
   return max.toJSON().split("T")[0] 
 }
 
-maxDate()
+
 
 
 
@@ -82,7 +82,8 @@ maxDate()
         <Row >
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Selecciona una fecha</Form.Label>
-            <Form.Control type="date" value={date}
+            <Form.Control type="date" 
+            value={date} min={getToday()} max={getMaxDate()}
               onChange={(e) => {
                 const selectDate = e.target.value;
                 setDate(selectDate);
