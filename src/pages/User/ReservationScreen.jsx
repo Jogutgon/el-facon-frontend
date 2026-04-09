@@ -56,18 +56,22 @@ function ReservationScreen({ jwt }) {
 
   }
 
-const getDate = () => {
+const getToday = () => {
   const today = new Date()
-  // console.log(today)
-  const jsonT = today.toJSON().split("T")[0]
-  console.log(jsonT)
+  return today.toJSON().split("T")[0]
+}
 
+const maxDate = () => {
+  const max = new Date()
   
-  
+  const fechaTreDias = max.setDate(getDate() + 3)
+  console.log(fechaTreDias)
   
 }
 
-getDate()
+maxDate()
+
+
 
 
   return (
