@@ -56,6 +56,18 @@ function ReservationScreen({ jwt }) {
 
   }
 
+const getDate = () => {
+  const today = new Date()
+  // console.log(today)
+  const jsonT = today.toJSON().split("T")[0]
+  console.log(jsonT)
+
+  
+  
+  
+}
+
+getDate()
 
 
   return (
@@ -87,13 +99,13 @@ function ReservationScreen({ jwt }) {
 
             <option value=""> Horarios </option>
               {
-                availability.map((slot) => (
+                availability.map((hour) => (
                   <option 
-                  key={slot.time}
-                  value={slot.time}
-                  disabled={!slot.available}
+                  key={hour.time}
+                  value={hour.time}
+                  disabled={!hour.available}
                   
-                  > {slot.time} {slot.available ? "" : "(No disponible)" } </option>
+                  > {hour.time} {hour.available ? "" : "(Reservado)" } </option>
                 ) )
               }
 
@@ -116,6 +128,9 @@ function ReservationScreen({ jwt }) {
           <Button variant='success' type="submit">Confirmar Reserva</Button>
         </div>
       </Form>
+
+
+              
 
     </Container>
   )
