@@ -43,11 +43,9 @@ function ReservationScreen({ jwt }) {
         }
       );
 
-
       setDate("");
       setTime("");
       setGuests("");
-
 
     } catch (error) {
       console.error(error);
@@ -69,16 +67,10 @@ function ReservationScreen({ jwt }) {
 
   const isPastHour = (time) => {
     if (!date) return false;
-
     const now = new Date();
     const selectDateTime = new Date(`${date}T${time}`);
-
     return selectDateTime < now
   }
-
-
-
-
 
 
   return (
@@ -102,7 +94,6 @@ function ReservationScreen({ jwt }) {
               required />
           </Form.Group>
 
-
           <Form.Group as={Col}>
             <Form.Label>Selecciona un horario</Form.Label>
             <Form.Select value={time}
@@ -111,28 +102,20 @@ function ReservationScreen({ jwt }) {
 
               <option value=""> Horarios </option>
               {
-                availability.map((hour) => {
-                  const past = isPastHour(hour.time);
-
-                  return (
+                availability.filter(hour => !isPastHour(hour.time))
+                .map((hour) => (
                     <option
                       key={hour.time}
                       value={hour.time}
-                      disabled={!hour.available || past}
+                      disabled={!hour.available}
 
-                    > {hour.time} {!hour.available ? "(Reservado)" : past ? ("Finalizado") : ""} </option>
+                    > {hour.time} {!hour.available ? "(Reservado)" : ""} </option>
                   )
-                })
+                )
               }
 
             </Form.Select>
           </Form.Group>
-
-          {/* <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>Horario</Form.Label>
-            <Form.Control type="time" value={time}
-              onChange={(e) => setTime(e.target.value)} required />
-          </Form.Group> */}
 
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Número de comensales</Form.Label>
@@ -144,9 +127,6 @@ function ReservationScreen({ jwt }) {
           <Button variant='success' type="submit">Confirmar Reserva</Button>
         </div>
       </Form>
-
-
-
 
     </Container>
   )
