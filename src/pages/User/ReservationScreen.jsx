@@ -63,10 +63,8 @@ const getToday = () => {
 
 const maxDate = () => {
   const max = new Date()
-  
-  const fechaTreDias = max.setDate(getDate() + 3)
-  console.log(fechaTreDias)
-  
+  max.setDate(max.getDate() + 3)
+  return max.toJSON().split("T")[0] 
 }
 
 maxDate()
