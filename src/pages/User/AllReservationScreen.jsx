@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, Table } from 'react-bootstrap'
 import axios from 'axios'
 
@@ -6,10 +6,27 @@ function AllReservationScreen( {jwt}) {
 
   const [reservation, setReservation] = useState([])
 
+  const getAllReservations = async ( _id ) => {
+    try {
+      const response = await axios.get("http://localhost:7000/reservation/delete-by-id", 
+      { id: req.params.id},
+
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      }
+      );
+      setReservation(response.data)
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
   
 
   useEffect(() => { 
-    // functraerreservas()
+    getAllReservations()
   }, [])
 
 
@@ -29,6 +46,16 @@ function AllReservationScreen( {jwt}) {
         </thead>
 
         <tbody>
+
+          {
+            reservation.map(() => (
+              <tr key={reservation._id} >
+                <td>{reservation.date}</td>
+                <td>{reservation.time}</td>
+                <td>{reservation.guests}</td>
+              </tr>
+            ))
+          }
           
           <tr>
             <td>1</td>
