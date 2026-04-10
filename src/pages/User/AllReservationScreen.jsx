@@ -1,6 +1,17 @@
+import { useEffect } from 'react'
 import { Container, Table } from 'react-bootstrap'
 
 function AllReservationScreen() {
+
+  const [reservation, setReservation] = useState([])
+
+
+
+  useEffect(() => { 
+    // functraerreservas()
+  }, [])
+
+
   return (
     <Container className='reserv-page text-white'>
       <h1>Mis reservas</h1>
