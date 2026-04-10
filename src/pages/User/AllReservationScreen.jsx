@@ -8,7 +8,7 @@ function AllReservationScreen( {jwt}) {
 
   const getAllReservations = async ( _id ) => {
     try {
-      const response = await axios.get("http://localhost:7000/reservation/delete-by-id", 
+      const response = await axios.delete("http://localhost:7000/reservation/delete-by-id", 
       { id: req.params.id},
 
       {
