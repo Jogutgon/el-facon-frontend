@@ -5,9 +5,9 @@ import { API_URL } from '../../common/constants'
 
 function AllReservationScreen( {jwt}) {
 
-  const [reservation, setReservation] = useState([])
+  const [reservations, setReservations] = useState([])
 
-  const getAllReservations = async ( _id ) => {
+  const getAllReservations = async () => {
     try {
       const response = await axios.get(API_URL + "/reservation/all-reservations", 
 
@@ -17,11 +17,34 @@ function AllReservationScreen( {jwt}) {
         }
       }
       );
-      setReservation(response.data)
+      setReservations(response.data)
 
     } catch (error) {
       console.error(error);
     }
+  }
+
+  const deleteReservation = async (_id) => {
+    try {
+      
+      const response = await axios.delete(API_URL + "/reservation/delete-by-id/" + _id,
+        {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      }  );
+
+      
+
+      
+    } catch (error) {
+      
+    }
+  }
+
+  const handleDeleteReservation = async (_id) => {
+    await deleteReservation(_id),
+    await getAllReservations()
   }
   
 
@@ -48,12 +71,15 @@ function AllReservationScreen( {jwt}) {
         <tbody>
 
           {
-            reservation.map((reservation) => (
+            reservations.map((reservation) => (
               <tr key={reservation._id} >
                 <td>{reservation.date}</td>
                 <td>{reservation.time}</td>
                 <td>{reservation.guests}</td>
-                <td> <Button variant='danger'>Cancelar</Button> </td>
+                <td> <Button variant='danger'
+                onClick={() => {
+                  handleDeleteReservation(reservation._id)
+                }}>Cancelar Reserva</Button> </td>
               </tr>
             ))
           }
