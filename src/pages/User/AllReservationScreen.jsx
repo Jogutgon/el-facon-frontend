@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Container, Table } from 'react-bootstrap'
+import { Button, Container, Table } from 'react-bootstrap'
 import axios from 'axios'
 import { API_URL } from '../../common/constants'
 
@@ -9,7 +9,7 @@ function AllReservationScreen( {jwt}) {
 
   const getAllReservations = async ( _id ) => {
     try {
-      const response = await axios.get(API_URL + "/reservation//all-reservations", 
+      const response = await axios.get(API_URL + "/reservation/all-reservations", 
 
       {
         headers: {
@@ -38,30 +38,27 @@ function AllReservationScreen( {jwt}) {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
             <th>Fecha</th>
             <th>Horario</th>
             <th>Comensales</th>
+            <th>Accion</th>
           </tr>
         </thead>
 
         <tbody>
 
           {
-            reservation.map(() => (
+            reservation.map((reservation) => (
               <tr key={reservation._id} >
                 <td>{reservation.date}</td>
                 <td>{reservation.time}</td>
                 <td>{reservation.guests}</td>
+                <td> <Button variant='danger'>Cancelar</Button> </td>
               </tr>
             ))
           }
           
-          <tr>
-            <td>1</td>
-            
-          </tr>
-          
+                   
         </tbody>
       </Table>
 
