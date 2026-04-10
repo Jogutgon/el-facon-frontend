@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Container, Table } from 'react-bootstrap'
 import axios from 'axios'
+import { API_URL } from '../../common/constants'
 
 function AllReservationScreen( {jwt}) {
 
@@ -8,8 +9,7 @@ function AllReservationScreen( {jwt}) {
 
   const getAllReservations = async ( _id ) => {
     try {
-      const response = await axios.delete("http://localhost:7000/reservation/delete-by-id", 
-      { id: req.params.id},
+      const response = await axios.get(API_URL + "/reservation//all-reservations", 
 
       {
         headers: {

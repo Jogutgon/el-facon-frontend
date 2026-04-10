@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../../styles/ReservationStyles.css'
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap'
 import axios from 'axios'
+import { API_URL } from '../../common/constants'
 
 function ReservationScreen({ jwt }) {
 
@@ -14,7 +15,7 @@ function ReservationScreen({ jwt }) {
     try {
 
       const response = await axios.get(
-        `http://localhost:7000/reservation/availability?date=${selectDate}`,
+        API_URL + `/reservation/availability?date=${selectDate}`,
         {
           headers: {
             Authorization: `Bearer ${jwt}`
@@ -34,7 +35,7 @@ function ReservationScreen({ jwt }) {
     try {
 
       const response = await axios.post(
-        "http://localhost:7000/reservation",
+        API_URL + "/reservation",
         { date, time, guests },
         {
           headers: {
