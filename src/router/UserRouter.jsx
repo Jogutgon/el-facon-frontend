@@ -12,7 +12,7 @@ function UserRouter( {jwt}) {
   return (
     <Routes>
       <Route path='/' element={<UserScreen />}  />
-      <Route path='/reservations' element={<AllReservationScreen />} />
+      <Route path='/reservations' element={<AllReservationScreen jwt={jwt} />} />
       <Route path='/reservations/new' element={<ReservationScreen jwt={jwt}/>} />
       
     </Routes>

@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 import { Container, Table } from 'react-bootstrap'
+import axios from 'axios'
 
-function AllReservationScreen() {
+function AllReservationScreen( {jwt}) {
 
   const [reservation, setReservation] = useState([])
 
-
+  
 
   useEffect(() => { 
     // functraerreservas()
