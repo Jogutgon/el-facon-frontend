@@ -1,21 +1,25 @@
 import { useEffect, useState } from 'react'
-import { Button, Container, Table } from 'react-bootstrap'
+import { Button, Container, Modal, Table, Toast } from 'react-bootstrap'
 import axios from 'axios'
 import { API_URL } from '../../common/constants'
 
-function AllReservationScreen( {jwt}) {
+function AllReservationScreen({ jwt }) {
 
+  const [show, setShow] = useState(false)
+  const [selectId, setSelectId] = useState(null)
   const [reservations, setReservations] = useState([])
+
+
 
   const getAllReservations = async () => {
     try {
-      const response = await axios.get(API_URL + "/reservation/all-reservations", 
+      const response = await axios.get(API_URL + "/reservation/all-reservations",
 
-      {
-        headers: {
-          Authorization: `Bearer ${jwt}`
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          }
         }
-      }
       );
       setReservations(response.data)
 
@@ -26,29 +30,41 @@ function AllReservationScreen( {jwt}) {
 
   const deleteReservation = async (_id) => {
     try {
-      
+
       const response = await axios.delete(API_URL + "/reservation/delete-by-id/" + _id,
         {
-        headers: {
-          Authorization: `Bearer ${jwt}`
-        }
-      }  );
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          }
+        });
 
-      
 
-      
+
+
     } catch (error) {
-      
+      console.error(error)
     }
   }
 
-  const handleDeleteReservation = async (_id) => {
-    await deleteReservation(_id),
-    await getAllReservations()
-  }
-  
+  const handleClose = () => {
+    setShow(false);
+  };
 
-  useEffect(() => { 
+  const handleShow = (_id) => {
+    setSelectId(_id);
+    setShow(true);
+  }
+
+  const handleConfirmDelete = async () => {
+    await deleteReservation(selectId);
+    await getAllReservations();
+    handleClose();
+
+  }
+
+
+
+  useEffect(() => {
     getAllReservations()
   }, [])
 
@@ -77,19 +93,34 @@ function AllReservationScreen( {jwt}) {
                 <td>{reservation.time}</td>
                 <td>{reservation.guests}</td>
                 <td> <Button variant='danger'
-                onClick={() => {
-                  handleDeleteReservation(reservation._id)
-                }}>Cancelar Reserva</Button> </td>
+                  onClick={() => {
+                    handleShow(reservation._id)
+                  }}>Cancelar Reserva</Button> </td>
               </tr>
             ))
           }
-          
-                   
+
+
         </tbody>
       </Table>
 
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Cancelar Reserva</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>¿Confima que desea cancelar la reserva?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={handleConfirmDelete}
+          >
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-
+      
     </Container>
   )
 }
