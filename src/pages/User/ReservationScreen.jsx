@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../../styles/ReservationStyles.css'
-import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap'
+import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import axios from 'axios'
 import { API_URL } from '../../common/constants'
 
@@ -10,6 +10,7 @@ function ReservationScreen({ jwt }) {
   const [time, setTime] = useState("")
   const [guests, setGuests] = useState("")
   const [availability, setAvailability] = useState([])
+  
 
   const isAvailable = async (selectDate) => {
     try {

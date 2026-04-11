@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Container, Modal, Table, Toast } from 'react-bootstrap'
+import { Button, Container, Modal, Table, Toast, ToastContainer } from 'react-bootstrap'
 import axios from 'axios'
 import { API_URL } from '../../common/constants'
 
@@ -8,13 +8,12 @@ function AllReservationScreen({ jwt }) {
   const [show, setShow] = useState(false)
   const [selectId, setSelectId] = useState(null)
   const [reservations, setReservations] = useState([])
-
+  const [toastShow, setToastShow] = useState(false)
 
 
   const getAllReservations = async () => {
     try {
       const response = await axios.get(API_URL + "/reservation/all-reservations",
-
         {
           headers: {
             Authorization: `Bearer ${jwt}`
@@ -22,7 +21,6 @@ function AllReservationScreen({ jwt }) {
         }
       );
       setReservations(response.data)
-
     } catch (error) {
       console.error(error);
     }
@@ -30,17 +28,12 @@ function AllReservationScreen({ jwt }) {
 
   const deleteReservation = async (_id) => {
     try {
-
       const response = await axios.delete(API_URL + "/reservation/delete-by-id/" + _id,
         {
           headers: {
             Authorization: `Bearer ${jwt}`
           }
         });
-
-
-
-
     } catch (error) {
       console.error(error)
     }
@@ -58,11 +51,17 @@ function AllReservationScreen({ jwt }) {
   const handleConfirmDelete = async () => {
     await deleteReservation(selectId);
     await getAllReservations();
+    handleToastShow();
     handleClose();
-
   }
 
+  const handleToastShow = () => {
+    setToastShow(true);
+  }
 
+  const handleToastClose = () => {
+    setToastShow(false)
+  }
 
   useEffect(() => {
     getAllReservations()
@@ -89,7 +88,7 @@ function AllReservationScreen({ jwt }) {
           {
             reservations.map((reservation) => (
               <tr key={reservation._id} >
-                <td>{reservation.date}</td>
+                <td>{reservation.date.split("T")[0]}</td>
                 <td>{reservation.time}</td>
                 <td>{reservation.guests}</td>
                 <td> <Button variant='danger'
@@ -99,8 +98,6 @@ function AllReservationScreen({ jwt }) {
               </tr>
             ))
           }
-
-
         </tbody>
       </Table>
 
@@ -108,19 +105,28 @@ function AllReservationScreen({ jwt }) {
         <Modal.Header closeButton>
           <Modal.Title>Cancelar Reserva</Modal.Title>
         </Modal.Header>
-        <Modal.Body>¿Confima que desea cancelar la reserva?</Modal.Body>
+        <Modal.Body>¿Está seguro que desea cancelar la reserva?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cerrar
           </Button>
           <Button variant="primary" onClick={handleConfirmDelete}
           >
-            Confirmar
+            Si
           </Button>
         </Modal.Footer>
       </Modal>
 
-      
+      <ToastContainer position='bottom-center' className='p-3'>
+        <Toast show={toastShow} onClose={handleToastClose} bg='dark'
+        delay={3500} autohide >
+          <Toast.Header className='bg-success'>
+            <strong className="me-auto center">Cancelacion de reserva</strong>
+          </Toast.Header>
+          <Toast.Body>Se ha cancelado la reserva correctamente.</Toast.Body>
+        </Toast>
+      </ToastContainer>
+
     </Container>
   )
 }
