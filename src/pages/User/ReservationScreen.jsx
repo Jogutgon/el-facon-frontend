@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import '../../styles/ReservationStyles.css'
-import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap'
+import { Button, Col, Container, Form, Row, Toast, ToastContainer } from 'react-bootstrap'
 import axios from 'axios'
+import { API_URL } from '../../common/constants'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function ReservationScreen({ jwt }) {
 
@@ -9,12 +11,14 @@ function ReservationScreen({ jwt }) {
   const [time, setTime] = useState("")
   const [guests, setGuests] = useState("")
   const [availability, setAvailability] = useState([])
+  const [toastShow, setToastShow] = useState(false)
+  
 
   const isAvailable = async (selectDate) => {
     try {
 
       const response = await axios.get(
-        `http://localhost:7000/reservation/availability?date=${selectDate}`,
+        API_URL + `/reservation/availability?date=${selectDate}`,
         {
           headers: {
             Authorization: `Bearer ${jwt}`
@@ -34,7 +38,7 @@ function ReservationScreen({ jwt }) {
     try {
 
       const response = await axios.post(
-        "http://localhost:7000/reservation",
+        API_URL + "/reservation",
         { date, time, guests },
         {
           headers: {
@@ -43,13 +47,15 @@ function ReservationScreen({ jwt }) {
         }
       );
 
+      setToastShow(true);
+
       setDate("");
       setTime("");
       setGuests("");
 
     } catch (error) {
       console.error(error);
-      alert("Error al crear la reserva")
+      alert(error.response?.data?.message || "Error al crear la reserva")
     }
 
   }
@@ -72,6 +78,11 @@ function ReservationScreen({ jwt }) {
     return selectDateTime < now
   }
 
+  
+
+  const handleToastClose = () => {
+    setToastShow(false)
+  }
 
   return (
     <Container className='reserv-page text-light cajaGREEN'>
@@ -127,6 +138,20 @@ function ReservationScreen({ jwt }) {
           <Button variant='success' type="submit">Confirmar Reserva</Button>
         </div>
       </Form>
+
+
+      <ToastContainer position='bottom-center' className='p-3'>
+        <Toast show={toastShow} onClose={handleToastClose} bg='dark'
+        delay={3500} autohide >
+          <Toast.Header className='bg-success'>
+            <strong className="me-auto">Reservación de mesa</strong>
+          </Toast.Header>
+          
+          <Toast.Body> 
+            <i class="bi bi-check2-circle me-2"></i>
+            Se realizó la reserva correctamente.</Toast.Body>
+        </Toast>
+      </ToastContainer>
 
     </Container>
   )
