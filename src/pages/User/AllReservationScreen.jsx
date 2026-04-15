@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Container, Modal, Table, Toast, ToastContainer } from 'react-bootstrap'
+import { Alert, Button, Container, Modal, Table, Toast, ToastContainer } from 'react-bootstrap'
 import axios from 'axios'
 import { API_URL } from '../../common/constants'
 
@@ -21,7 +21,8 @@ function AllReservationScreen({ jwt }) {
         }
       );
       setReservations(response.data)
-    } catch (error) {
+
+          } catch (error) {
       console.error(error);
     }
   }
@@ -70,12 +71,16 @@ function AllReservationScreen({ jwt }) {
 
   return (
     <Container className='reserv-page text-white'>
-      <h1>Mis reservas</h1>
-      <p>tablita turururu</p>
+      <h1 className='mb-3'>Mis reservas</h1>
+
+      <Alert variant='danger' className='mb-3'>
+          <i class="bi bi-bell-fill pe-2"></i>
+          Para realizar cancelaciones, tienes un rango de 3 horas previas al horario fijado.
+        </Alert>
 
       <Table striped bordered hover>
         <thead>
-          <tr>
+          <tr className='text-center'>
             <th>Fecha</th>
             <th>Horario</th>
             <th>Comensales</th>
@@ -84,10 +89,9 @@ function AllReservationScreen({ jwt }) {
         </thead>
 
         <tbody>
-
           {
             reservations.map((reservation) => (
-              <tr key={reservation._id} >
+              <tr key={reservation._id} className='text-center'>
                 <td>{reservation.date.split("T")[0]}</td>
                 <td>{reservation.time}</td>
                 <td>{reservation.guests}</td>
@@ -120,10 +124,10 @@ function AllReservationScreen({ jwt }) {
       <ToastContainer position='bottom-center' className='p-3'>
         <Toast show={toastShow} onClose={handleToastClose} bg='dark'
         delay={3500} autohide >
-          <Toast.Header className='bg-success'>
+          <Toast.Header className='bg-info'>
             <strong className="me-auto center">Cancelacion de reserva</strong>
           </Toast.Header>
-          <Toast.Body>Se ha cancelado la reserva correctamente.</Toast.Body>
+          <Toast.Body> ☑ Su reserva se ha cancelado correctamente.</Toast.Body>
         </Toast>
       </ToastContainer>
 
