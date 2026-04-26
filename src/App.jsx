@@ -57,7 +57,7 @@ function App() {
           <Route path='/register' element={<RegisterScreen />} />
           <Route path='/admin/*'
             element={<ProtectedRoute isAllowed={jwt.length > 0 && admin}>
-              <AdminRouter />
+              <AdminRouter jwt={jwt} />
             </ProtectedRoute>} />
           <Route path='/user/*' 
           element={<ProtectedRoute isAllowed={jwt.length > 0}>

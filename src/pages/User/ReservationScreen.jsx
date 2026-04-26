@@ -85,7 +85,7 @@ function ReservationScreen({ jwt }) {
   }
 
   return (
-    <Container className='reserv-page text-light cajaGREEN'>
+    <Container className='my-5 py-5 text-light cajaGREEN'>
 
       <h1 className=' text-white'>Realizar reserva</h1>
 

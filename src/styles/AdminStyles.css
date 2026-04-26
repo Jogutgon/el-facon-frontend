@@ -1,0 +1,14 @@
+.page-admin {
+    margin-top: 50px;
+    padding-top: 50px; 
+    min-height: 100vh;
+}
+
+.icon-fs{
+    font-size: 3rem;
+}
+
+.marco {
+    border: 1px solid red;
+}
+

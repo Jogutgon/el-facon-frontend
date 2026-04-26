@@ -70,7 +70,7 @@ function AllReservationScreen({ jwt }) {
 
 
   return (
-    <Container className='reserv-page text-white'>
+    <Container className='my-5 py-5 text-white'>
       <h1 className='mb-3'>Mis reservas</h1>
 
       <Alert variant='danger' className='mb-3'>
