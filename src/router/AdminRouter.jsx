@@ -8,7 +8,7 @@ import UserCrudScreen from '../pages/Admin/UserCrudScreen'
 function AdminRouter( {jwt}) {
   return ( 
     <Routes>
-      <Route path='/' element={<AdminScreen/>} />
+      <Route path='/' element={<AdminScreen jwt={jwt} />} />
       
       <Route path='/users' element={<UserCrudScreen jwt={jwt} />} />
       
