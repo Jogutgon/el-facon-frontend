@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Container, Table } from 'react-bootstrap'
+import axios from 'axios'
 
 
 function UserCrudScreen() {
 
+  const [user, setUser] = useState([])
+
+  const getUsers = async () => {
+    try {
+      const response = await axios.get()
+    } catch (error) {
+      
+    }
+  }
 
 
 
