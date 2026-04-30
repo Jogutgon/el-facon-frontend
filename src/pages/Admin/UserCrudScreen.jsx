@@ -26,8 +26,10 @@ function UserCrudScreen( {jwt} ) {
   }
 
   useEffect(() => {
+
+    if(!jwt) return;
     getAllUsers();
-  }, [])
+  }, [jwt])
 
 
 
@@ -51,7 +53,12 @@ function UserCrudScreen( {jwt} ) {
 
       <tbody>
         {
-          users.map( (user, index) => (
+          users.length === 0 ? (
+            <tr>
+              <td colSpan='6'>No hay usuarios</td>
+            </tr>
+          ) : (
+            users.map( (user, index) => (
             <tr key={user._id}>
               <td>{index + 1}</td>
               <td>{user.firstName}</td>
@@ -61,6 +68,7 @@ function UserCrudScreen( {jwt} ) {
               <td>{user.status ? 'Activo' : 'Inactivo'}</td>
             </tr>
           ))
+          )
         }
         
       </tbody>

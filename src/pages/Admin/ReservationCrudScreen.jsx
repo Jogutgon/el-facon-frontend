@@ -1,25 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Table } from 'react-bootstrap'
+import axios from 'axios';
+import { API_URL } from '../../common/constants';
 
 
-function ReservationCrudScreen() {
+function ReservationCrudScreen( {jwt} ) {
 
   const [reservations, setReservations] = useState([]);
 
-  const getAllReservations = () => {
+  const getAllReservations = async () => {
     try {
       
-      
+      const response = await axios.get(API_URL + '/admin/reservations', {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      }
+    );
+
+    setReservations(response.data.data)      
 
     } catch (error) {
-      
+      console.error(error)
     }
   }
 
 
   useEffect(() => {
-
-  }, [])
+    if(!jwt) return;
+    getAllReservations();
+  }, [jwt]);
 
 
 
@@ -41,7 +51,24 @@ function ReservationCrudScreen() {
           </tr>
         </thead>
         <tbody>
-          
+          {
+            reservations.length === 0 ? (
+              <tr>
+                <td colSpan="5">No hay reservas</td>
+              </tr>
+            ) : (
+              reservations.map((r, index)=> (
+              <tr key={r._id}>
+                <td>{index + 1}</td>
+                <td>{r.user.firstName} {r.user.lastName}</td>
+                <td>{new Date(r.date).toLocaleDateString()}</td>
+                <td>{r.time}</td>
+                <td>{r.guests}</td>
+
+              </tr>
+            ))
+            )
+          }
 
         </tbody>
       </Table>
