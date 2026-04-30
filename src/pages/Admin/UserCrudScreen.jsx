@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Table } from 'react-bootstrap'
+import { Button, Container, Table } from 'react-bootstrap'
 import axios from 'axios'
 import { API_URL } from '../../common/constants'
 
@@ -31,6 +31,20 @@ function UserCrudScreen( {jwt} ) {
     getAllUsers();
   }, [jwt])
 
+  const updateUser = async () => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
+
+  // Handlers
+
+  const handleUpdateUser = async () => {
+
+  }
 
 
   return (
@@ -48,6 +62,7 @@ function UserCrudScreen( {jwt} ) {
           <th>Usuario</th>
           <th>Email</th>
           <th>Estado</th>
+          <th>Accion</th>
         </tr>
       </thead>
 
@@ -55,7 +70,7 @@ function UserCrudScreen( {jwt} ) {
         {
           users.length === 0 ? (
             <tr>
-              <td colSpan='6'>No hay usuarios</td>
+              <td colSpan='7'>No hay usuarios</td>
             </tr>
           ) : (
             users.map( (user, index) => (
@@ -66,6 +81,18 @@ function UserCrudScreen( {jwt} ) {
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>{user.status ? 'Activo' : 'Inactivo'}</td>
+              <td>
+                <Button variant='outline-primary' className='me-1' 
+                onClick={handleUpdateUser}>
+                  <i className="bi bi-pencil-square"></i>
+                  </Button>
+                <Button variant='outline-success'className='mx-1'>
+                  <i className="bi bi-person-fill-slash"></i>
+                </Button>
+                <Button variant='outline-danger'className='ms-1'>
+                  <i className="bi bi-trash3"></i>
+                </Button>
+              </td>
             </tr>
           ))
           )
