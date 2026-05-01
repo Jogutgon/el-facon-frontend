@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Container, Form, Modal, Row, Table } from 'react-bootstrap'
+import { Button, Col, Container, Form, Modal, Row, Table, Toast, ToastContainer } from 'react-bootstrap'
 import axios from 'axios'
 import { API_URL } from '../../common/constants'
 
@@ -9,6 +9,7 @@ function UserCrudScreen({ jwt }) {
 
   const [showModal, setShowModal] = useState(false)
   const [selectId, setSelectId] = useState(null)
+  const [toastShow, setToastShow] = useState(false)
 
   const [users, setUsers] = useState([])
 
@@ -133,12 +134,19 @@ function UserCrudScreen({ jwt }) {
    setShowModal(true) ;
   }
 
-  
-
   const handleConfirmDelete = async () => {
     await deleteUser(selectId);
     await getAllUsers();
-    handleClose()
+    handleToastShow();
+    handleClose();
+  }
+
+  const handleToastShow = () => {
+    setToastShow(true);
+  }
+
+  const handleToastClose = () => {
+    setToastShow(false);
   }
 
 
@@ -283,6 +291,16 @@ function UserCrudScreen({ jwt }) {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <ToastContainer position='bottom-center' className='p-3'>
+        <Toast show={toastShow} onClose={handleToastClose} bg='dark'
+        delay={3500} autohide >
+          <Toast.Header className='bg-info'>
+            <strong className="me-auto center">Eliminación de usuario</strong>
+          </Toast.Header>
+          <Toast.Body> ☑ El usuario ha sido eliminado correctamente.</Toast.Body>
+        </Toast>
+      </ToastContainer>
 
 
     </Container>
