@@ -16,6 +16,7 @@ function UserCrudScreen({ jwt }) {
   const [updateUsername, setUpdateUsername] = useState("")
   const [updateEmail, setUpdateEmail] = useState("")
 
+
   const getAllUsers = async () => {
     try {
 
@@ -57,6 +58,30 @@ function UserCrudScreen({ jwt }) {
     }
   }
 
+  const changeStatusUser = async(user) => {
+    try {
+
+      const response = await axios.patch(API_URL + `/admin/users/${user._id}/status`, {
+        status: !user.status
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      })
+
+      setUsers(users.map(u => 
+        u._id === user._id ? response.data.data : u
+      ));
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const deleteUser = async () => {
+    
+  }
 
   useEffect(() => {
 
@@ -78,6 +103,8 @@ function UserCrudScreen({ jwt }) {
     setUpdateUsername("")
     setUpdateEmail("")
   }
+
+  
 
 
   return (
@@ -117,6 +144,7 @@ function UserCrudScreen({ jwt }) {
                   <td>
 
                     <Button variant='outline-primary' className='me-1'
+                    title='Editar'
                       onClick={() => {
                         setUpdateId(user._id)
                         setUpdateName(user.firstName)
@@ -127,11 +155,14 @@ function UserCrudScreen({ jwt }) {
                       <i className="bi bi-pencil-square"></i>
                     </Button>
 
-                    <Button variant='outline-success' className='mx-1'>
-                      <i className="bi bi-person-fill-slash"></i>
+                    <Button variant={user.status ? 'outline-success' : 'secondary'} className='mx-1'
+                    title={user.status ? 'Desactivar usuario' : 'Activar usuario'}
+                    onClick={() => changeStatusUser(user)}>
+                      <i className={ `bi ${user.status ? 'bi-person-fill-check' : 'bi-person-fill-slash'}`}></i>
                     </Button>
 
-                    <Button variant='outline-danger' className='ms-1'>
+                    <Button variant='outline-danger' className='ms-1'
+                    title='Eliminar'>
                       <i className="bi bi-trash3"></i>
                     </Button>
                   </td>
@@ -150,52 +181,50 @@ function UserCrudScreen({ jwt }) {
         {
           updateId.length > 0 && (
             <>
-              <h4>Editando Usuario</h4>
+              <h4>Editando Usuario:</h4>
 
-              <Form className="d-flex flex-column" >
+              <Form >
 
-                <Row>
-                  <Form.Group as={Col} md='6' className="mb-2" controlId="formBasicFirstName">
+                <Row className='d-flex justify-content-around'>
+                  <Form.Group as={Col} md='5' className="mb-2" controlId="formBasicFirstName">
                     <Form.Label>Nombre</Form.Label>
                     <Form.Control type="text"
                       placeholder="Actualizar nombre"
                       value={updateName}
                       onChange={(event) => setUpdateName(event.target.value)} />
                   </Form.Group>
-
-
-                  <Form.Group as={Col} md='6' className="mb-2" controlId="formBasicLastName">
+                  <Form.Group as={Col} md='5' className="mb-2" controlId="formBasicLastName">
                     <Form.Label>Apellido</Form.Label>
                     <Form.Control type="text" placeholder="Actualizar apellido"
                       value={updateLastName}
                       onChange={(event) => { setUpdateLastName(event.target.value) }} />
                   </Form.Group>
                 </Row>
-                <Row>
-                  <Form.Group as={Col} md='6' className="mb-2" controlId="formBasicUsername">
+
+                <Row className='d-flex justify-content-around'>
+                  <Form.Group as={Col} md='5' className="mb-2" controlId="formBasicUsername">
                     <Form.Label>Usuario</Form.Label>
                     <Form.Control type="text" placeholder="Actualizar nombre de usuario"
                       value={updateUsername}
                       onChange={(event) => setUpdateUsername(event.target.value)} />
                   </Form.Group>
 
-                  <Form.Group as={Col} md='6' className="mb-2" controlId="formBasicEmail">
+                  <Form.Group as={Col} md='5' className="mb-2" controlId="formBasicEmail">
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="email" placeholder="Actualizar email"
                       value={updateEmail}
                       onChange={(event) => setUpdateEmail(event.target.value)} />
                   </Form.Group>
                 </Row>
-                <div>
-                  <Button variant='success' onClick={handleSubmitUpdate}>Actualizar</Button>
-                  <Button variant='outline-danger'
+                <div className='mt-4'>
+                  <Button className='mx-2 px-5' variant='outline-danger'
                     onClick={() => {
                       setUpdateId("")
                       setUpdateName("")
                       setUpdateLastName("")
                       setUpdateUsername("")
-                      setUpdateEmail("")
-                    }}>Cancelar</Button>
+                      setUpdateEmail("") }}>Cancelar</Button>
+                  <Button className='mx-2' variant='success' onClick={handleSubmitUpdate}>Guardar cambios</Button>
                 </div>
 
               </Form>
