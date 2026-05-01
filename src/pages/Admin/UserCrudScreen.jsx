@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap'
+import { Button, Col, Container, Form, Modal, Row, Table } from 'react-bootstrap'
 import axios from 'axios'
 import { API_URL } from '../../common/constants'
 
 
 
 function UserCrudScreen({ jwt }) {
+
+  const [showModal, setShowModal] = useState(false)
+  const [selectId, setSelectId] = useState(null)
 
   const [users, setUsers] = useState([])
 
@@ -79,9 +82,26 @@ function UserCrudScreen({ jwt }) {
     }
   }
 
-  const deleteUser = async () => {
-    
+
+ 
+  const deleteUser = async (_id) => {
+    try {
+      const response = await axios.delete(API_URL + '/admin/deleteUser-by-id/' + _id, {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+
+      })
+
+      setUsers(users.filter(u => u._id !== id));
+
+    } catch (error) {
+      console.error(error)
+    }
   }
+
+
+  
 
   useEffect(() => {
 
@@ -104,7 +124,22 @@ function UserCrudScreen({ jwt }) {
     setUpdateEmail("")
   }
 
+  const handleClose = async () => {
+    setShowModal(false);
+  }
+
+   const handleShow = (_id) => {
+    setSelectId(_id);
+   setShowModal(true) ;
+  }
+
   
+
+  const handleConfirmDelete = async () => {
+    await deleteUser(selectId);
+    await getAllUsers();
+    handleClose()
+  }
 
 
   return (
@@ -162,7 +197,8 @@ function UserCrudScreen({ jwt }) {
                     </Button>
 
                     <Button variant='outline-danger' className='ms-1'
-                    title='Eliminar'>
+                    title='Eliminar'
+                    onClick={() => handleShow(user._id)}>
                       <i className="bi bi-trash3"></i>
                     </Button>
                   </td>
@@ -175,7 +211,6 @@ function UserCrudScreen({ jwt }) {
       </Table>
 
       {/* formulario para actualizar */}
-
 
       <Row className='mt-4'>
         {
@@ -232,6 +267,22 @@ function UserCrudScreen({ jwt }) {
           )
         }
       </Row>
+
+      <Modal show={showModal} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Eliminar usuario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>¿Está seguro que desea eliminar el usuario?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={handleConfirmDelete}
+          >
+            Si
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
 
     </Container>
