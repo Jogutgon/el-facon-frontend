@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Container, Form, Row, Table, Toast, ToastContainer } from 'react-bootstrap'
+import { Button, Col, Container, Form, InputGroup, Modal, Row, Table, Toast, ToastContainer } from 'react-bootstrap'
 import axios from 'axios';
 import { API_URL } from '../../common/constants';
 
@@ -8,15 +8,17 @@ function ReservationCrudScreen({ jwt }) {
 
   const [reservations, setReservations] = useState([]);
 
+  const [modalShow, setModalShow] = useState(false)
+  const [selectId, setSelectId] = useState(null)
+  const [toastDelete, setToastDelete] = useState(false)
   const [toastUpdate, setToastUpdate] = useState(false)
   const [updateId, setUpdateId] = useState("")
   const [updateDate, setUpdateDate] = useState("")
   const [updateTime, setUpdateTime] = useState("")
   const [updateGuests, setUpdateGuests] = useState("")
   const [availability, setAvailability] = useState([])
-
-
-
+  const [search, setSearch] = useState("")
+  const [filterDate, setFilterDate] = useState("")
 
 
   const getAllReservations = async () => {
@@ -79,17 +81,14 @@ function ReservationCrudScreen({ jwt }) {
     try {
       const response = await axios.delete(API_URL + '/admin/delete-reservation/' + _id, {
         headers: {
-          Authorization: `Bearer ${jwt}` 
+          Authorization: `Bearer ${jwt}`
         }
       });
-
-      setReservations(reservations.filter(r => r._id !== id))
 
     } catch (error) {
       console.error(error)
     }
   }
-
 
 
   useEffect(() => {
@@ -129,24 +128,73 @@ function ReservationCrudScreen({ jwt }) {
     setUpdateDate("")
     setUpdateTime("")
     setUpdateGuests("")
-    //toast
     setToastUpdate(true);
+  }
 
+  const handleUpdateCancel = () => {
+    setUpdateId("")
   }
 
   const handleToastClose = () => {
     setToastUpdate(false)
   }
 
+  const handleShow = (_id) => {
+    setSelectId(_id);
+    setModalShow(true);
+  }
 
+  const handleConfirmDelete = async () => {
+    await deleteReservation(selectId);
+    await getAllReservations();
+    handleToastDelete();
+    handleClose();
+  }
 
+  const handleClose = () => {
+    setModalShow(false);
+  }
+
+  const handleToastDelete = () => {
+    setToastDelete(true);
+  }
+
+  const handleToastDelClose = () => {
+    setToastDelete(false);
+  }
 
   return (
     <Container className='text-white text-center marco my-5 py-5'>
 
-      <h1 className='my-4'>Reservas confirmadas</h1>
+      <h3 className='mt-3 mb-4 pb-2'>Reservas confirmadas</h3>
 
-      {/* Tabla de reservas */}
+      <Row className='mb-3'>
+        <Col md={4}>
+          <InputGroup>
+            <InputGroup.Text>
+              <i class="bi bi-search"></i>
+            </InputGroup.Text>
+            <Form.Control
+            type='text'
+            placeholder='Buscar cliente...'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}/>
+          </InputGroup>
+        </Col>
+        <Col md={4}>
+        <InputGroup>
+          <InputGroup.Text>
+          {/* <i class="bi bi-calendar3"></i> */}
+          <i class="bi bi-search"></i>
+
+          </InputGroup.Text>
+          <Form.Control
+          type='date'
+          value={filterDate}
+          onChange={(e) => setFilterDate(e.target.value)}/>
+        </InputGroup>
+        </Col>
+      </Row>
 
       <Table striped bordered hover>
         <thead>
@@ -163,10 +211,21 @@ function ReservationCrudScreen({ jwt }) {
           {
             reservations.length === 0 ? (
               <tr>
-                <td colSpan="5">No hay reservas</td>
+                <td colSpan="6">No hay reservas</td>
               </tr>
             ) : (
-              reservations.map((r, index) => (
+              reservations
+              .filter( r => {
+                const fullName = `${r.user?.firstName || ""} ${r.user?.lastName || ""}`.toLowerCase();
+                const matchText = fullName.includes(search.toLowerCase());
+
+                const matchDate = filterDate
+                ? r.date.startsWith(filterDate) : true;
+                return matchText || matchDate;
+              }
+
+              )
+              .map((r, index) => (
                 <tr key={r._id}>
                   <td>{index + 1}</td>
 
@@ -192,15 +251,12 @@ function ReservationCrudScreen({ jwt }) {
                       <i className="bi bi-pencil-square"></i>
                     </Button>
                     <Button variant='outline-danger' className='ms-1'
-                      title='Eliminar'>
+                      title='Eliminar' onClick={() => { handleShow(r._id) }}>
                       <i className="bi bi-trash3"></i>
                     </Button>
                   </td>
                 </tr>
-              ))
-            )
-          }
-
+              )))}
         </tbody>
       </Table>
 
@@ -223,7 +279,6 @@ function ReservationCrudScreen({ jwt }) {
                       }}
                       required />
                   </Form.Group>
-
                   <Form.Group as={Col} md='3'>
                     <Form.Label>Hora</Form.Label>
                     <Form.Select value={updateTime} className='text-center'
@@ -243,15 +298,14 @@ function ReservationCrudScreen({ jwt }) {
                       }
                     </Form.Select>
                   </Form.Group>
-
                   <Form.Group as={Col} md='3'>
                     <Form.Label>Comensales</Form.Label>
                     <Form.Control type='number' value={updateGuests} min={2} max={10} className='text-center'
                       onChange={(e) => setUpdateGuests(e.target.value)} required />
                   </Form.Group>
-
                   <div className='mt-4'>
-                    <Button variant='outline-danger' className='mx-2 px-5'>Cancelar</Button>
+                    <Button variant='outline-danger' className='mx-2 px-5'
+                      onClick={handleUpdateCancel}>Cancelar</Button>
                     <Button variant='success' className='ms-1'
                       type='submit'>Guardar cambios</Button>
                   </div>
@@ -261,12 +315,23 @@ function ReservationCrudScreen({ jwt }) {
           )
         }
       </Row>
-        
-      {/* toast actualizacion */}
 
+      {/* Modal eliminar reserva */}
+      <Modal show={modalShow} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Eliminar reserva</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>¿Está seguro que desea eliminar la reserva?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>Cerrar</Button>
+          <Button variant="primary" onClick={handleConfirmDelete}>Si, eliminar</Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* toast actualizacion */}
       <ToastContainer position='bottom-center' className='p-3'>
         <Toast show={toastUpdate} onClose={handleToastClose} bg='dark'
-        delay={3500} autohide >
+          delay={3500} autohide >
           <Toast.Header className='bg-success d-flex'>
             <strong className="me-auto text-center">Actualización de reserva</strong>
           </Toast.Header>
@@ -274,9 +339,16 @@ function ReservationCrudScreen({ jwt }) {
         </Toast>
       </ToastContainer>
 
-
-
-
+      {/* toast eliminar */}
+      <ToastContainer position='bottom-center' className='p-3'>
+        <Toast show={toastDelete} onClose={handleToastDelClose} bg='dark'
+          delay={3500} autohide >
+          <Toast.Header className='bg-success d-flex'>
+            <strong className="me-auto text-center">Eliminar reserva</strong>
+          </Toast.Header>
+          <Toast.Body> ☑ La reserva se eliminó correctamente.</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </Container>
   )
 }
