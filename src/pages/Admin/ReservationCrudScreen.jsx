@@ -75,6 +75,20 @@ function ReservationCrudScreen({ jwt }) {
     }
   }
 
+  const deleteReservation = async (_id) => {
+    try {
+      const response = await axios.delete(API_URL + '/admin/delete-reservation/' + _id, {
+        headers: {
+          Authorization: `Bearer ${jwt}` 
+        }
+      });
+
+      setReservations(reservations.filter(r => r._id !== id))
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
 
 
