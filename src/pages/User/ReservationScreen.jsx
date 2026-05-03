@@ -130,7 +130,7 @@ function ReservationScreen({ jwt }) {
 
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Número de comensales</Form.Label>
-            <Form.Control type='number' value={guests} min={2} max={12}
+            <Form.Control type='number' value={guests} min={2} max={10}
               onChange={(e) => setGuests(e.target.value)} required />
           </Form.Group>
         </Row>

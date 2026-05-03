@@ -115,7 +115,8 @@ function UserCrudScreen({ jwt }) {
 
   // Handlers
 
-  const handleSubmitUpdate = async () => {
+  const handleSubmitUpdate = async (event) => {
+    event.preventDefault();
     await updateUser();
     await getAllUsers();
     setUpdateId("")
@@ -226,7 +227,7 @@ function UserCrudScreen({ jwt }) {
             <>
               <h4>Editando Usuario:</h4>
 
-              <Form >
+              <Form onSubmit={handleSubmitUpdate} >
 
                 <Row className='d-flex justify-content-around'>
                   <Form.Group as={Col} md='5' className="mb-2" controlId="formBasicFirstName">
@@ -267,7 +268,7 @@ function UserCrudScreen({ jwt }) {
                       setUpdateLastName("")
                       setUpdateUsername("")
                       setUpdateEmail("") }}>Cancelar</Button>
-                  <Button className='mx-2' variant='success' onClick={handleSubmitUpdate}>Guardar cambios</Button>
+                  <Button className='mx-2' variant='success' type='submit'>Guardar cambios</Button>
                 </div>
 
               </Form>
