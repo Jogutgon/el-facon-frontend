@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap'
+import { Button, Col, Container, Form, Row, Table, Toast, ToastContainer } from 'react-bootstrap'
 import axios from 'axios';
 import { API_URL } from '../../common/constants';
 
@@ -8,11 +8,14 @@ function ReservationCrudScreen({ jwt }) {
 
   const [reservations, setReservations] = useState([]);
 
+  const [toastUpdate, setToastUpdate] = useState(false)
   const [updateId, setUpdateId] = useState("")
   const [updateDate, setUpdateDate] = useState("")
   const [updateTime, setUpdateTime] = useState("")
   const [updateGuests, setUpdateGuests] = useState("")
   const [availability, setAvailability] = useState([])
+
+
 
 
 
@@ -56,23 +59,23 @@ function ReservationCrudScreen({ jwt }) {
     try {
       const response = await axios.put(API_URL + '/admin/update-reservation/' + updateId, {
         "date": updateDate,
-        "time": updateTime, 
+        "time": updateTime,
         "guests": updateGuests
-      }, 
-    {
-      headers: {
-        Authorization: `Bearer ${jwt}`
-      }
-    });
-    
-    console.log("Respuesta update:", response.data);
+      },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          }
+        });
+
+      console.log("Respuesta update:", response.data);
 
     } catch (error) {
       console.error("Error update:", error.response?.data || error);
     }
   }
 
-  
+
 
 
   useEffect(() => {
@@ -112,6 +115,13 @@ function ReservationCrudScreen({ jwt }) {
     setUpdateDate("")
     setUpdateTime("")
     setUpdateGuests("")
+    //toast
+    setToastUpdate(true);
+
+  }
+
+  const handleToastClose = () => {
+    setToastUpdate(false)
   }
 
 
@@ -150,35 +160,28 @@ function ReservationCrudScreen({ jwt }) {
                     ? `${r.user.firstName} ${r.user.lastName}`
                     : 'Usuario eliminado'
                   }</td>
-
                   <td>{formatDate(r.date)}</td>
                   <td>{r.time}</td>
                   <td>{r.guests}</td>
-
                   <td>
                     <Button variant='outline-primary' className='me-1'
                       title='Editar'
                       onClick={() => {
-                        // tengo que pedir disponibilidad de la hora, no la estoy pidiendo y es availibility
-
-                      const formattedDate = r.date.split('T')[0];
+                        const formattedDate = r.date.split('T')[0];
                         setUpdateId(r._id);
                         setUpdateDate(formattedDate);
                         setUpdateTime(r.time);
                         setUpdateGuests(r.guests);
 
                         isAvailable(formattedDate);
-
                       }}>
                       <i className="bi bi-pencil-square"></i>
                     </Button>
-
                     <Button variant='outline-danger' className='ms-1'
                       title='Eliminar'>
                       <i className="bi bi-trash3"></i>
                     </Button>
                   </td>
-
                 </tr>
               ))
             )
@@ -191,56 +194,73 @@ function ReservationCrudScreen({ jwt }) {
       <Row>
         {
           updateId.length > 0 && (
-            <Form onSubmit={handleSubmitUpdate}>
-              <Row>
-                <Form.Group as={Col}>
-                  <Form.Label>Fecha</Form.Label>
-                  <Form.Control type='date'
-                    value={updateDate} min={getToday()} max={getMaxDate()}
-                    onChange={(e) => {
-                      const selectDate = e.target.value;
-                      setUpdateDate(selectDate);
-                      isAvailable(selectDate);
+            <>
+              <h4>Editando reservas</h4>
+              <Form onSubmit={handleSubmitUpdate}>
+                <Row className='d-flex justify-content-center'>
+                  <Form.Group as={Col} md='3'>
+                    <Form.Label>Fecha</Form.Label>
+                    <Form.Control type='date' className='text-center'
+                      value={updateDate} min={getToday()} max={getMaxDate()}
+                      onChange={(e) => {
+                        const selectDate = e.target.value;
+                        setUpdateDate(selectDate);
+                        isAvailable(selectDate);
+                      }}
+                      required />
+                  </Form.Group>
 
-                    }}
-                    required />
-                </Form.Group>
+                  <Form.Group as={Col} md='3'>
+                    <Form.Label>Hora</Form.Label>
+                    <Form.Select value={updateTime} className='text-center'
+                      onChange={(e) => setUpdateTime(e.target.value)}
+                      required>
+                      <option value=""> Horarios </option>
+                      {
+                        availability.filter(hour => !isPastHour(hour.time))
+                          .map((hour) => (
+                            <option
+                              key={hour.time}
+                              value={hour.time}
+                              disabled={!hour.available}
 
-                <Form.Group as={Col}>
-                  <Form.Label>Hora</Form.Label>
-                  <Form.Select value={updateTime}
-                    onChange={(e) => setUpdateTime(e.target.value)}
-                    required>
-                    <option value=""> Horarios </option>
-                    {
-                      availability.filter(hour => !isPastHour(hour.time))
-                        .map((hour) => (
-                          <option
-                            key={hour.time}
-                            value={hour.time}
-                            disabled={!hour.available}
+                            > {hour.time} {!hour.available ? "(Reservado)" : ""} </option>
+                          ))
+                      }
+                    </Form.Select>
+                  </Form.Group>
 
-                          > {hour.time} {!hour.available ? "(Reservado)" : ""} </option>
-                        )
-                        )
-                    }
-                  </Form.Select>
-                </Form.Group>
+                  <Form.Group as={Col} md='3'>
+                    <Form.Label>Comensales</Form.Label>
+                    <Form.Control type='number' value={updateGuests} min={2} max={10} className='text-center'
+                      onChange={(e) => setUpdateGuests(e.target.value)} required />
+                  </Form.Group>
 
-                <Form.Group as={Col}>
-                  <Form.Label>Comensales</Form.Label>
-                  <Form.Control type='number' value={updateGuests} min={2} max={10}
-                    onChange={(e) => setUpdateGuests(e.target.value)} required />
-                </Form.Group>
-                <div>
-                  <Button variant='success'
-                  type='submit'>Guardar</Button>
-                </div>
-              </Row>
-            </Form>
+                  <div className='mt-4'>
+                    <Button variant='outline-danger' className='mx-2 px-5'>Cancelar</Button>
+                    <Button variant='success' className='ms-1'
+                      type='submit'>Guardar cambios</Button>
+                  </div>
+                </Row>
+              </Form>
+            </>
           )
         }
       </Row>
+        
+      {/* toast actualizacion */}
+
+      <ToastContainer position='bottom-center' className='p-3'>
+        <Toast show={toastUpdate} onClose={handleToastClose} bg='dark'
+        delay={3500} autohide >
+          <Toast.Header className='bg-success d-flex'>
+            <strong className="me-auto text-center">Actualización de reserva</strong>
+          </Toast.Header>
+          <Toast.Body> ☑ Se actualizaron los datos correctamente.</Toast.Body>
+        </Toast>
+      </ToastContainer>
+
+
 
 
     </Container>
