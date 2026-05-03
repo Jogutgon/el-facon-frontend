@@ -1,0 +1,20 @@
+.page-admin {
+    margin-top: 50px;
+    padding-top: 50px; 
+    min-height: 100vh;
+}
+
+.icon-fs{
+    font-size: 3rem;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+    opacity: 0.95;
+}
+
+.marco {
+    border: 1px solid red;
+}
+
