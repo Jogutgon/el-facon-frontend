@@ -37,14 +37,14 @@ useEffect(()=>{
 }, [jwt]);
 
   return (
-    <Container className='text-white my-5 py-5 marco'>
+    <Container className='text-white my-5 py-5'>
       <Row className='text-center'>
         <Col>
           <h1 className='py-4'>¡Bienvenido a tu panel!</h1>
         </Col>
       </Row>
       <Row className='pt-5 justify-content-center g-4'>
-        <Col className='marco d-flex justify-content-center'>
+        <Col className='d-flex justify-content-center'>
           <Card style={{ width: '16rem', cursor: 'pointer' }} className='bg-primary text-white text-center'
           onClick={() => navigate('/admin/users')}>
             <Card.Body>
@@ -62,7 +62,7 @@ useEffect(()=>{
           </Card>
         </Col>
 
-        <Col className='d-flex justify-content-center marco'>
+        <Col className='d-flex justify-content-center'>
           <Card style={{ width: '16rem', cursor: 'pointer' }} className='bg-success text-white text-center'
           onClick={() => navigate('/admin/reservations')}>
             <Card.Body>
@@ -78,7 +78,7 @@ useEffect(()=>{
           </Card>
         </Col>
 
-        <Col className='d-flex justify-content-center marco'>
+        <Col className='d-flex justify-content-center'>
           <Card style={{ width: '16rem', cursor: 'pointer' }} className='bg-danger text-white text-center'
           onClick={() => navigate('/admin/users')}>
             <Card.Body>
