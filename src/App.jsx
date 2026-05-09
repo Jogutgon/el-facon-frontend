@@ -10,6 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 import AdminRouter from './router/AdminRouter';
 import UserRouter from './router/UserRouter';
 import ProtectedRoute from './components/ProtectedRoute';
+import NotFoundScreen from './pages/NotFoundScreen';
 
 
 function App() {
@@ -63,7 +64,7 @@ function App() {
           element={<ProtectedRoute isAllowed={jwt.length > 0}>
             <UserRouter jwt={jwt} />
           </ProtectedRoute>} />
-
+        <Route path='*' element={<NotFoundScreen/>}/>
         </Routes>
         <Footer authenticated={!!jwt} />
 

@@ -1,0 +1,10 @@
+.notFound {
+   min-height: 90vh;
+   display: flex;
+   align-items: center;
+}
+
+.img404 {
+    width: 80%;
+    max-width: 550px;
+}
