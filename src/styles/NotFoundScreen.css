@@ -1,8 +1,10 @@
 .notFound {
-    padding-top: 80px;
-    min-width: 100vh;
+   min-height: 90vh;
+   display: flex;
+   align-items: center;
 }
 
 .img404 {
-    width: 93%;
+    width: 80%;
+    max-width: 550px;
 }

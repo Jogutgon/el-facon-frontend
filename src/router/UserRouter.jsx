@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import UserScreen from '../pages/User/UserScreen'
 import ReservationScreen from '../pages/User/ReservationScreen'
 import AllReservationScreen from '../pages/User/AllReservationScreen'
+import NotFoundScreen from '../pages/NotFoundScreen'
 
 
 
@@ -14,7 +15,7 @@ function UserRouter( {jwt}) {
       <Route path='/' element={<UserScreen />}  />
       <Route path='/reservations' element={<AllReservationScreen jwt={jwt} />} />
       <Route path='/reservations/new' element={<ReservationScreen jwt={jwt}/>} />
-      
+      <Route path='*' element={<NotFoundScreen/>} /> 
     </Routes>
   )
 }

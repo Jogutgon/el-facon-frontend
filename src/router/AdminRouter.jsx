@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import AdminScreen from '../pages/Admin/AdminScreen'
 import ReservationCrudScreen from '../pages/Admin/ReservationCrudScreen'
 import UserCrudScreen from '../pages/Admin/UserCrudScreen'
+import NotFoundScreen from '../pages/NotFoundScreen'
 
 
 function AdminRouter( {jwt}) {
@@ -13,6 +14,8 @@ function AdminRouter( {jwt}) {
       <Route path='/users' element={<UserCrudScreen jwt={jwt} />} />
       
       <Route path='/reservations' element={<ReservationCrudScreen jwt={jwt} />} />
+
+      <Route path='*' element={<NotFoundScreen/>} />
     </Routes>
   )
 }
