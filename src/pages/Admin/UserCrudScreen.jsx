@@ -141,7 +141,7 @@ function UserCrudScreen({ jwt }) {
   }
 
   return (
-    <Container className='my-5 py-5 text-white text-center marco'>
+    <Container className='my-5 py-5 text-white text-center'>
       <h3 className='mt-3 mb-4 pb-2'> Usuarios registrados</h3>
 
       <Row className='my-3'>

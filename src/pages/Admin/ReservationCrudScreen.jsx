@@ -164,7 +164,7 @@ function ReservationCrudScreen({ jwt }) {
   }
 
   return (
-    <Container className='text-white text-center marco my-5 py-5'>
+    <Container className='text-white text-center my-5 py-5'>
 
       <h3 className='mt-3 mb-4 pb-2'>Reservas confirmadas</h3>
 
@@ -221,7 +221,7 @@ function ReservationCrudScreen({ jwt }) {
 
                 const matchDate = filterDate
                 ? r.date.startsWith(filterDate) : true;
-                return matchText || matchDate;
+                return matchText && matchDate;
               }
 
               )
