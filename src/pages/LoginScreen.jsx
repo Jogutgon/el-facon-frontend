@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
-import { Button, Col, Container, Form, Row } from 'react-bootstrap'
+import { Button, Col, Container, Form, Row, Toast, ToastContainer } from 'react-bootstrap'
 import '../styles/LoginStyles.css'
 import logo from '../assets/icons/logo.svg'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 
 
@@ -11,14 +11,16 @@ function LoginScreen({ changeJwt }) {
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [showToast, setShowToast] = useState(false)
 
-  
 
   const handleLogin = (event) => {
     event.preventDefault();
-    
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -36,34 +38,44 @@ function LoginScreen({ changeJwt }) {
 
 
     fetch("http://localhost:7000/auth/login", requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      console.log("LOGIN RESULT:", result);
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("LOGIN RESULT:", result);
 
-      if(!result || !result.access_token) {
-        console.error("Token invalido", result);
-        alert("Correo o contraseña incorrectos");
-        return;
-      }
-
-      changeJwt(result.access_token);
-
-      try{
-        const decoded = jwtDecode(result.access_token);
-
-        if (decoded.isAdmin) {
-          navigate('/admin');
-        } else {
-          navigate('/user');
+        if (!result || !result.access_token) {
+          console.error("Token invalido", result);
+          alert("Correo o contraseña incorrectos");
+          return;
         }
-      } catch(error) {
-        console.log("Error decodificando token", error);
-      }
-    })
-    .catch((error) => console.error(error));
-    
-}
- 
+
+        changeJwt(result.access_token);
+
+        try {
+          const decoded = jwtDecode(result.access_token);
+
+          if (decoded.isAdmin) {
+            navigate('/admin');
+          } else {
+            navigate('/user');
+          }
+        } catch (error) {
+          console.log("Error decodificando token", error);
+        }
+      })
+      .catch((error) => console.error(error));
+
+  }
+
+  useEffect(() => {
+    if (location.state?.confirmMessage) {
+      setShowToast(true);
+    }
+  }, [location]);
+
+  const handleToastClose = () => {
+    setShowToast(false);
+  }
+
 
   return (
     <Container className="login-page text-white fira-sans-thin">
@@ -93,14 +105,14 @@ function LoginScreen({ changeJwt }) {
 
             <div className="d-flex justify-content-end">
               <Button className="mt-3" variant="success" type="submit"
-                >Iniciar Sesión</Button>
+              >Iniciar Sesión</Button>
             </div>
           </Form>
 
 
           <div className="d-flex justify-content-center pt-5 login-link">
             <p className="d-inline me-1">¿Aún no tienes cuenta?</p>
-            <Link  to="/register">Registrarse</Link>
+            <Link to="/register">Registrarse</Link>
           </div>
         </Col>
 
@@ -109,9 +121,9 @@ function LoginScreen({ changeJwt }) {
             <div className="login-overlay">
               <h1 className="">¡Bienvenido!</h1>
               <img src={logo} alt="logo" className="img-fluid logo" />
-              
-        
-      
+
+
+
             </div>
           </div>
         </Col>
@@ -119,6 +131,17 @@ function LoginScreen({ changeJwt }) {
       <div className="login-copyright">
         <p>© 2026 Josefina Gutierrez Gonzalez.</p>
       </div>
+
+      <ToastContainer position='bottom-center' className='p-3'>
+        <Toast show={showToast} onClose={handleToastClose} bg='dark'
+          delay={3500} autohide >
+          <Toast.Header className='bg-success d-flex'>
+            <strong className="me-auto text-center">Registro de usuario</strong>
+          </Toast.Header>
+          <Toast.Body> ☑ Registro exitoso. Inicia sesión</Toast.Body>
+        </Toast>
+      </ToastContainer>
+
     </Container>
   )
 }
