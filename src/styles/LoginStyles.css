@@ -2,11 +2,6 @@
 .login-page{
   padding-top: 80px;
   min-height: 100vh;
-    /* display: flex;
-    flex-direction: column;
-    padding-top: 80px;
-    min-height: calc(100vh - 80px); */
-    
 }
 
 
@@ -16,7 +11,7 @@
     display: flex;
     align-items: stretch;
     
-    min-height: 75vh;
+    min-height: 84vh;
 }
 
 .login-col-img{
@@ -51,7 +46,7 @@
 
 .login-copyright{
   position: absolute;
-  bottom: 10px;
+  bottom: 5px;
   right:39px;
   width: 50%;
   text-align: center;
@@ -97,7 +92,7 @@
   }
 
   .login-copyright{
-    margin-top: 40px;
+    display: none;
   }
 
 }

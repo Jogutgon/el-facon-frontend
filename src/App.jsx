@@ -31,7 +31,7 @@ function App() {
 
   const changeJwt = (value) => {
     setJwt(value)
-    // localStorage.setItem("token", value)
+    
     if(value) {
       localStorage.setItem("token", value)
     } else {
@@ -53,7 +53,7 @@ function App() {
         <Header authenticated={!!jwt} admin={admin} changeJwt={changeJwt} />
 
         <Routes>
-          <Route path='/' element={<HomeScreen />} />
+          <Route path='/' element={<HomeScreen authenticated={!!jwt} admin={admin} />} />
           <Route path='/login' element={<LoginScreen changeJwt={changeJwt} />} />
           <Route path='/register' element={<RegisterScreen />} />
           <Route path='/admin/*'

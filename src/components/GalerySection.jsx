@@ -23,13 +23,13 @@ const fila2 = [
 function GalerySection() {
 
   return (
-    <section id='galeria' className='section'>
+    <section id='galeria' className='section text-white'>
       <img className='sep-icn mt-4 d-block mx-auto pt-4 pb-3' src={separator} alt="separator" />
-      <h2 className='fira-sans-thin text-center pt-2 pb-3'>Galeria </h2>
+      <h2 className='fira-sans-bold text-center pt-2 pb-3'>Galeria </h2>
       <Container>
         <Row>
           {fila1.map((item, index) => (
-            <Col lg={4} md={6} xs={12} key={index}>
+            <Col xxl={4} lg={4} md={6} xs={12} key={index}>
               <img 
               src={item.src} 
               alt={item.alt}
@@ -39,7 +39,7 @@ function GalerySection() {
         </Row>
         <Row className='mb-4'>
           {fila2.map((item, index)=> (
-            <Col lg={4} md={6} xs={12} key={index}>
+            <Col xxl={4} lg={4} md={6} xs={12} key={index}>
               <img src={item.src} 
               alt={item.alt}
               className='img-fluid p-1' />

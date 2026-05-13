@@ -141,12 +141,11 @@ function UserCrudScreen({ jwt }) {
   }
 
   return (
-    <Container className='my-5 py-5 text-white text-center'>
-      <h3 className='mt-3 mb-4 pb-2'> Usuarios registrados</h3>
+    <Container className='my-5 py-5 text-white text-center fira-sans-regular'>
+      <h3 className='mt-3 mb-4 pb-2 fira-sans-bold'> Usuarios registrados</h3>
 
-      <Row className='my-3'>
-        <Col md={4}>
-
+      <Row className='my-3 justify-content-center'>
+        <Col lg={4} md={4} xs={12} className='mb-3 mb-md-0'>
           <InputGroup>
             <InputGroup.Text>
               <i className="bi bi-search"></i>
@@ -159,96 +158,99 @@ function UserCrudScreen({ jwt }) {
               onChange={(e) => setSearch(e.target.value)}
             />
           </InputGroup>
-
         </Col>
       </Row>
 
       {/* Tabla */}
 
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Usuario</th>
-            <th>Email</th>
-            <th>Estado</th>
-            <th>Accion</th>
-          </tr>
-        </thead>
+      <div className='table-responsive'>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Usuario</th>
+              <th>Email</th>
+              <th>Estado</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {
-            users.length === 0 ? (
-              <tr>
-                <td colSpan='7'>No hay usuarios</td>
-              </tr>
-            ) : (
-              users
-                .filter(u =>
-                  u.firstName.toLowerCase().includes(search.toLowerCase()) ||
-                  u.lastName.toLowerCase().includes(search.toLowerCase())
-                )
-                .map((user, index) => (
-                  <tr key={user._id}>
-                    <td>{index + 1}</td>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>{user.status ? 'Activo' : 'Inactivo'}</td>
-                    <td>
+          <tbody>
+            {
+              users.length === 0 ? (
+                <tr>
+                  <td colSpan='7'>No hay usuarios</td>
+                </tr>
+              ) : (
+                users
+                  .filter(u =>
+                    u.firstName.toLowerCase().includes(search.toLowerCase()) ||
+                    u.lastName.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((user, index) => (
+                    <tr key={user._id}>
+                      <td>{index + 1}</td>
+                      <td>{user.firstName}</td>
+                      <td>{user.lastName}</td>
+                      <td>{user.username}</td>
+                      <td>{user.email}</td>
+                      <td>{user.status ? 'Activo' : 'Inactivo'}</td>
+                      <td>
+                        <div className='d-flex justify-content-center'>
+                          <Button variant='outline-primary' className='mx-1'
+                            title='Editar'
+                            onClick={() => {
+                              setUpdateId(user._id)
+                              setUpdateName(user.firstName)
+                              setUpdateLastName(user.lastName)
+                              setUpdateUsername(user.username)
+                              setUpdateEmail(user.email)
+                            }}>
+                            <i className="bi bi-pencil-square"></i></Button>
 
-                      <Button variant='outline-primary' className='me-1'
-                        title='Editar'
-                        onClick={() => {
-                          setUpdateId(user._id)
-                          setUpdateName(user.firstName)
-                          setUpdateLastName(user.lastName)
-                          setUpdateUsername(user.username)
-                          setUpdateEmail(user.email)
-                        }}>
-                        <i className="bi bi-pencil-square"></i></Button>
+                          <Button variant={user.status ? 'outline-success' : 'secondary'} className='mx-1'
+                            title={user.status ? 'Desactivar usuario' : 'Activar usuario'}
+                            onClick={() => changeStatusUser(user)}>
+                            <i className={`bi ${user.status ? 'bi-person-fill-check' : 'bi-person-fill-slash'}`}></i>
+                          </Button>
 
-                      <Button variant={user.status ? 'outline-success' : 'secondary'} className='mx-1'
-                        title={user.status ? 'Desactivar usuario' : 'Activar usuario'}
-                        onClick={() => changeStatusUser(user)}>
-                        <i className={`bi ${user.status ? 'bi-person-fill-check' : 'bi-person-fill-slash'}`}></i>
-                      </Button>
+                          <Button variant='outline-danger' className='mx-1'
+                            title='Eliminar'
+                            onClick={() => handleShow(user._id)}>
+                            <i className="bi bi-trash3"></i>
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+              )
+            }
 
-                      <Button variant='outline-danger' className='ms-1'
-                        title='Eliminar'
-                        onClick={() => handleShow(user._id)}>
-                        <i className="bi bi-trash3"></i>
-                      </Button>
-                    </td>
-                  </tr>
-                ))
-            )
-          }
-
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
+      </div>
 
       {/* formulario para actualizar */}
 
-      <Row className='mt-4'>
+      <Row className='mt-4 justify-content-center'>
         {
           updateId.length > 0 && (
             <>
-              <h4>Editando Usuario:</h4>
+              <h4 className='mb-4'>Editando Usuario:</h4>
 
               <Form onSubmit={handleSubmitUpdate}>
-                <Row className='d-flex justify-content-around'>
-                  <Form.Group as={Col} md='5' className="mb-2" controlId="formBasicFirstName">
+                <Row className='justify-content-center'>
+                  <Form.Group as={Col} md={5} xs={12}
+                  className="mb-3" controlId="formBasicFirstName">
                     <Form.Label>Nombre</Form.Label>
                     <Form.Control type="text"
                       placeholder="Actualizar nombre"
                       value={updateName}
                       onChange={(event) => setUpdateName(event.target.value)} />
                   </Form.Group>
-                  <Form.Group as={Col} md='5' className="mb-2" controlId="formBasicLastName">
+                  <Form.Group as={Col} md={5} xs={12} className="mb-3" controlId="formBasicLastName">
                     <Form.Label>Apellido</Form.Label>
                     <Form.Control type="text" placeholder="Actualizar apellido"
                       value={updateLastName}
@@ -256,15 +258,15 @@ function UserCrudScreen({ jwt }) {
                   </Form.Group>
                 </Row>
 
-                <Row className='d-flex justify-content-around'>
-                  <Form.Group as={Col} md='5' className="mb-2" controlId="formBasicUsername">
+                <Row className='d-flex justify-content-center'>
+                  <Form.Group as={Col} md={5} xs={12} className="mb-3" controlId="formBasicUsername">
                     <Form.Label>Usuario</Form.Label>
                     <Form.Control type="text" placeholder="Actualizar nombre de usuario"
                       value={updateUsername}
                       onChange={(event) => setUpdateUsername(event.target.value)} />
                   </Form.Group>
 
-                  <Form.Group as={Col} md='5' className="mb-2" controlId="formBasicEmail">
+                  <Form.Group as={Col} md={5} xs={12} className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="email" placeholder="Actualizar email"
                       value={updateEmail}
