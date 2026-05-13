@@ -85,14 +85,15 @@ function ReservationScreen({ jwt }) {
   }
 
   return (
-    <Container className='my-5 py-5 text-light cajaGREEN'>
+    <Container className='my-5 py-5 text-light fira-sans-regular'>
 
-      <h1 className=' text-white'>Realizar reserva</h1>
+      <h1 className='mt-3 mb-4 pb-2 text-white text-center text-md-start fira-sans-bold'>Realizar reserva</h1>
 
       <Form className='mt-5' onSubmit={handleSubtmitForm}>
 
-        <Row >
-          <Form.Group as={Col} controlId="formGridState">
+        <Row className='g-4'>
+          <Form.Group as={Col} xl={4} lg={4} md={12} xs={12}
+          controlId="formGridState">
             <Form.Label>Selecciona una fecha</Form.Label>
             <Form.Control type="date"
               value={date} min={getToday()} max={getMaxDate()}
@@ -105,7 +106,7 @@ function ReservationScreen({ jwt }) {
               required />
           </Form.Group>
 
-          <Form.Group as={Col}>
+          <Form.Group as={Col} as={Col} xl={4} lg={4} md={12} xs={12}>
             <Form.Label>Selecciona un horario</Form.Label>
             <Form.Select value={time}
               onChange={(e) => setTime(e.target.value)}
@@ -128,7 +129,8 @@ function ReservationScreen({ jwt }) {
             </Form.Select>
           </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridState">
+          <Form.Group as={Col} as={Col} xl={4} lg={4} md={12} xs={12}
+          controlId="formGridState">
             <Form.Label>Número de comensales</Form.Label>
             <Form.Control type='number' value={guests} min={2} max={10}
               onChange={(e) => setGuests(e.target.value)} required />

@@ -92,10 +92,7 @@
     margin-top: 30px;
   }
   .register-copyright{
-    position: static;
-    width: 100%;
-    margin-top: 0px;
-    text-align: center;
+    display: none;
   }
 
 }

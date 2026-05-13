@@ -5,6 +5,7 @@ import logo from '../assets/icons/logo.svg'
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
+import { API_URL } from '../common/constants'
 
 
 function LoginScreen({ changeJwt }) {
@@ -37,7 +38,7 @@ function LoginScreen({ changeJwt }) {
     };
 
 
-    fetch("http://localhost:7000/auth/login", requestOptions)
+    fetch(API_URL + "/auth/login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log("LOGIN RESULT:", result);
@@ -80,9 +81,10 @@ function LoginScreen({ changeJwt }) {
   return (
     <Container className="login-page text-white fira-sans-thin">
 
-      <h3 className="pt-1 pb-2">Login</h3>
-      <Row className="login-container">
+      <Row className="login-container mt-2">
         <Col lg={6} md={12} xs={12} className="login-container-form mx-auto">
+
+        <h3 className=" text-center pt-1 pb-2 fira-sans-bold">Login</h3>
 
           <Form className="d-flex flex-column" onSubmit={handleLogin} >
             <Form.Group className="mb-3 mt-4" controlId="formBasicEmail">
@@ -104,7 +106,7 @@ function LoginScreen({ changeJwt }) {
             </Form.Group>
 
             <div className="d-flex justify-content-end">
-              <Button className="mt-3" variant="success" type="submit"
+              <Button className="mt-3 fira-sans-regular" variant="success" type="submit"
               >Iniciar Sesión</Button>
             </div>
           </Form>
@@ -119,18 +121,15 @@ function LoginScreen({ changeJwt }) {
         <Col lg={6} md={12} xs={12} className='login-col-img' >
           <div className="login-image">
             <div className="login-overlay">
-              <h1 className="">¡Bienvenido!</h1>
+              <h1 className="fira-sans-bold">¡Bienvenido!</h1>
               <img src={logo} alt="logo" className="img-fluid logo" />
-
-
-
             </div>
           </div>
         </Col>
-      </Row>
-      <div className="login-copyright">
+        <div className="login-copyright">
         <p>© 2026 Josefina Gutierrez Gonzalez.</p>
       </div>
+      </Row>
 
       <ToastContainer position='bottom-center' className='p-3'>
         <Toast show={showToast} onClose={handleToastClose} bg='dark'

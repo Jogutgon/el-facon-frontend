@@ -3,14 +3,16 @@ import { Button, Container, Nav, Navbar } from 'react-bootstrap'
 import logo from '../assets/icons/logo.svg'
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function Header({ authenticated = false, admin = false, changeJwt }) {
 
+  const [expanded, setExpanded] = useState(false)
   const navigate = useNavigate();
   
   return (
     <div>
-      <Navbar expand="lg" bg="dark" variant='dark'
+      <Navbar expanded={expanded} expand="lg" bg="dark" variant='dark'
       data-bs-theme="dark" className='justify-content-between text-center' fixed='top'>
       <Container>
         <Navbar.Brand as={Link} to='/'>
@@ -22,14 +24,14 @@ function Header({ authenticated = false, admin = false, changeJwt }) {
               alt="Logo"
             />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav"  />
+        <Navbar.Toggle aria-controls="basic-navbar-nav"
+        onClick={() => setExpanded(expanded ? false : true)}  />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link  href="#quienes-somos">Quienes somos</Nav.Link>
-            <Nav.Link href="#galeria">Galeria</Nav.Link>
-            <Nav.Link href="#contacto">Contacto</Nav.Link>
-            <Nav.Link href="#reservas">Reservas</Nav.Link>
-            
+            <Nav.Link className='fira-sans-regular' href="/#quienes-somos">Quienes somos</Nav.Link>
+            <Nav.Link className='fira-sans-regular' href="/#galeria">Galeria</Nav.Link>
+            <Nav.Link className='fira-sans-regular' href="/#contacto">Contacto</Nav.Link>
+            <Nav.Link className='fira-sans-regular' href="/#reservas">Reservas</Nav.Link>
           </Nav>
 
 
@@ -37,18 +39,18 @@ function Header({ authenticated = false, admin = false, changeJwt }) {
           {
               authenticated && admin && (
               <> 
-                <Nav.Link as={Link} to="/admin" >Panel Admin</Nav.Link>
-                <Nav.Link as={Link} to="/admin/users" >Usuarios</Nav.Link>
-                <Nav.Link as={Link} to="/admin/reservations" >Reservas</Nav.Link></>
+                <Nav.Link className='fira-sans-regular' as={Link} to="/admin" onClick={() => setExpanded(false)} >Panel Admin</Nav.Link>
+                <Nav.Link className='fira-sans-regular' as={Link} to="/admin/users" onClick={() => setExpanded(false)} >Usuarios</Nav.Link>
+                <Nav.Link className='fira-sans-regular' as={Link} to="/admin/reservations" onClick={() => setExpanded(false)} >Reservas</Nav.Link></>
                )
             }
 
             {
               authenticated && !admin && (
                 <>
-                <Nav.Link as={Link} to="/user" >Panel</Nav.Link>
-                <Nav.Link as={Link} to="/user/reservations" >Mis Reservas</Nav.Link>
-                <Nav.Link as={Link} to="/user/reservations/new" >Reservar</Nav.Link>
+                <Nav.Link className='fira-sans-regular' as={Link} to="/user" onClick={() => setExpanded(false)} >Panel</Nav.Link>
+                <Nav.Link className='fira-sans-regular' as={Link} to="/user/reservations" onClick={() => setExpanded(false)} >Mis Reservas</Nav.Link>
+                <Nav.Link className='fira-sans-regular' as={Link} to="/user/reservations/new" onClick={() => setExpanded(false)} >Reservar</Nav.Link>
                 </>
               )
             }
@@ -59,11 +61,14 @@ function Header({ authenticated = false, admin = false, changeJwt }) {
           { 
               authenticated === false ? ( 
                 <>
-                  <Button variant="outline-primary" className='mx-1' as={Link} to='/login' >Iniciar sesion</Button>
-                  <Button variant="outline-primary" as={Link} to='/register' >Registrarse</Button>
+                  <Button variant="outline-primary" className='mx-2 fira-sans-regular' 
+                  as={Link} to='/login' >Iniciar sesion</Button>
+                  <Button variant="outline-primary" className='fira-sans-regular' 
+                  as={Link} to='/register' >Registrarse</Button>
                 </>
               ) : ( 
-                  <Button variant="btn btn-link" 
+                  <Button variant="btn btn-link"
+                  className='fira-sans-regular' 
                   onClick={() => {
                     changeJwt("");
                     navigate("/login");}

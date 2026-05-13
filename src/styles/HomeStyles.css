@@ -11,6 +11,18 @@ body {
   color: white;
 }
 
+.fira-sans-bold {
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.fira-sans-regular {
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 /* .roboto-condensed-w {
   font-family: "Roboto Condensed", sans-serif;
   font-optical-sizing: auto;

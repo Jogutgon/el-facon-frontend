@@ -52,9 +52,10 @@ function RegisterScreen() {
 
     <Container className=" register-page text-white fira-sans-thin">
 
-      <h3 className="py-1">Registro</h3>
+      
       <Row className="pt-2">
         <Col lg={6} md={12} xs={12} className="container-form mx-auto">
+        <h3 className="py-1 fira-sans-bold">Registro</h3>
           <Form
             className="d-flex flex-column"
             onSubmit={handleRegister} >
@@ -108,7 +109,7 @@ function RegisterScreen() {
         <Col lg={6} md={12} xs={12} className='col-img' >
           <div className="register-image ">
             <div className="register-overlay ">
-              <h1 className="">¡Bienvenido!</h1>
+              <h1 className="fira-sans-bold">¡Bienvenido!</h1>
               <img src={logo} alt="logo" className="img-fluid logo" />
             </div>
           </div>

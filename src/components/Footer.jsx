@@ -18,7 +18,7 @@ function Footer({ authenticated = false}) {
             <div className="container">
                 <div className="row align-items-center">
                     <div className="col-12 col-md-4 text-center mb-4 mb-md-0 fira-sans-thin">
-                        <h6>Visitanos:</h6>
+                        <h6 className='fira-sans-bold'>Visitanos:</h6>
                         <p className="mb-1">
                             <i className="bi bi-geo-fill me-2"></i>
                             San Javier, Tucumán</p>
