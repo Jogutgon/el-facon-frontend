@@ -10,8 +10,8 @@ function MainSection() {
             <div className='overlay'>
                 <Container>
                     <Row className='justify-content-center align-items-center fira-sans-thin'>
-                        <Col lg={8} md={6} xs={12}  className='text-center'>
-                            <h1 className='fira-sans-thin py-4' >¿Quiénes somos?</h1>
+                        <Col xxl={7} xl={8} lg={9} md={10} xs={12}  className='text-center'>
+                            <h1 className='fira-sans-bold py-4' >¿Quiénes somos?</h1>
                             <p>
                                 Bienvenidos al Restaurante "El Facón", situada en el punto más emblemático de San Javier, Tucumán.
                                 El prestigio de nuestra cocina se sustenta en el legado de generaciones que han

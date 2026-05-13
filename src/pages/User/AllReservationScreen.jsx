@@ -22,7 +22,7 @@ function AllReservationScreen({ jwt }) {
       );
       setReservations(response.data)
 
-          } catch (error) {
+    } catch (error) {
       console.error(error);
     }
   }
@@ -70,40 +70,44 @@ function AllReservationScreen({ jwt }) {
 
 
   return (
-    <Container className='my-5 py-5 text-white'>
-      <h1 className='mb-3'>Mis reservas</h1>
+    <Container className='my-5 py-5 text-white fira-sans-regular'>
+      <h1 className='mt-3 mb-4 pb-2 text-center text-md-start fira-sans-bold'>Mis reservas</h1>
 
-      <Alert variant='danger' className='mb-3'>
-          <i class="bi bi-bell-fill pe-2"></i>
-          Para realizar cancelaciones, tienes un rango de 3 horas previas al horario fijado.
-        </Alert>
+      <Alert variant='danger' className='mb-4 text-center text-md-start'>
+        <i class="bi bi-bell-fill pe-2"></i>
+        Para realizar cancelaciones, tienes un rango de 3 horas previas al horario fijado.
+      </Alert>
 
-      <Table striped bordered hover>
-        <thead>
-          <tr className='text-center'>
-            <th>Fecha</th>
-            <th>Horario</th>
-            <th>Comensales</th>
-            <th>Accion</th>
-          </tr>
-        </thead>
+      <div className='table-responsive'>
+        <Table striped bordered hover>
+          <thead>
+            <tr className='text-center'>
+              <th>Fecha</th>
+              <th>Horario</th>
+              <th>Comensales</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {
-            reservations.map((reservation) => (
-              <tr key={reservation._id} className='text-center'>
-                <td>{reservation.date.split("T")[0]}</td>
-                <td>{reservation.time}</td>
-                <td>{reservation.guests}</td>
-                <td> <Button variant='danger'
-                  onClick={() => {
-                    handleShow(reservation._id)
-                  }}>Cancelar Reserva</Button> </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </Table>
+          <tbody>
+            {
+              reservations.map((reservation) => (
+                <tr key={reservation._id} className='text-center'>
+                  <td>{reservation.date.split("T")[0]}</td>
+                  <td>{reservation.time}</td>
+                  <td>{reservation.guests}</td>
+                  <td> <Button variant='danger'
+                    size='sm'
+                    onClick={() => {
+                      handleShow(reservation._id)
+                    }}>Cancelar Reserva</Button> </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </Table>
+
+      </div>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
@@ -123,7 +127,7 @@ function AllReservationScreen({ jwt }) {
 
       <ToastContainer position='bottom-center' className='p-3'>
         <Toast show={toastShow} onClose={handleToastClose} bg='dark'
-        delay={3500} autohide >
+          delay={3500} autohide >
           <Toast.Header className='bg-info'>
             <strong className="me-auto center">Cancelacion de reserva</strong>
           </Toast.Header>

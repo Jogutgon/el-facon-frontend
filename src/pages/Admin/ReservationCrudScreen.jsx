@@ -164,15 +164,15 @@ function ReservationCrudScreen({ jwt }) {
   }
 
   return (
-    <Container className='text-white text-center my-5 py-5'>
+    <Container className='text-white text-center my-5 py-5 fira-sans-regular'>
 
-      <h3 className='mt-3 mb-4 pb-2'>Reservas confirmadas</h3>
+      <h3 className='mt-3 mb-4 pb-2 fira-sans-bold'>Reservas confirmadas</h3>
 
       <Row className='mb-3'>
-        <Col md={4}>
+        <Col lg={4} md={6} xs={12} className='mb-2'>
           <InputGroup>
             <InputGroup.Text>
-              <i class="bi bi-search"></i>
+              <i className="bi bi-search"></i>
             </InputGroup.Text>
             <Form.Control
             type='text'
@@ -181,11 +181,11 @@ function ReservationCrudScreen({ jwt }) {
             onChange={(e) => setSearch(e.target.value)}/>
           </InputGroup>
         </Col>
-        <Col md={4}>
+        <Col lg={4} md={6} xs={12} className='mb-2'>
         <InputGroup>
           <InputGroup.Text>
           {/* <i class="bi bi-calendar3"></i> */}
-          <i class="bi bi-search"></i>
+          <i className="bi bi-search"></i>
 
           </InputGroup.Text>
           <Form.Control
@@ -196,7 +196,9 @@ function ReservationCrudScreen({ jwt }) {
         </Col>
       </Row>
 
-      <Table striped bordered hover>
+      <div className='table-responsive'>
+
+          <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
@@ -237,7 +239,8 @@ function ReservationCrudScreen({ jwt }) {
                   <td>{r.time}</td>
                   <td>{r.guests}</td>
                   <td>
-                    <Button variant='outline-primary' className='me-1'
+                    <div className='d-flex justify-content-center'>
+                      <Button variant='outline-primary' className='mx-1'
                       title='Editar'
                       onClick={() => {
                         const formattedDate = r.date.split('T')[0];
@@ -250,15 +253,19 @@ function ReservationCrudScreen({ jwt }) {
                       }}>
                       <i className="bi bi-pencil-square"></i>
                     </Button>
-                    <Button variant='outline-danger' className='ms-1'
+                    <Button variant='outline-danger'
+                    className='mx-1' 
                       title='Eliminar' onClick={() => { handleShow(r._id) }}>
                       <i className="bi bi-trash3"></i>
                     </Button>
+                    </div>
                   </td>
                 </tr>
               )))}
         </tbody>
       </Table>
+
+      </div>
 
       {/* Formulario para actualizar datos */}
       <Row>
@@ -268,7 +275,7 @@ function ReservationCrudScreen({ jwt }) {
               <h4>Editando reservas</h4>
               <Form onSubmit={handleSubmitUpdate}>
                 <Row className='d-flex justify-content-center'>
-                  <Form.Group as={Col} md='3'>
+                  <Form.Group as={Col} lg={3} md={4} sm={6} xs={12}>
                     <Form.Label>Fecha</Form.Label>
                     <Form.Control type='date' className='text-center'
                       value={updateDate} min={getToday()} max={getMaxDate()}
@@ -279,7 +286,7 @@ function ReservationCrudScreen({ jwt }) {
                       }}
                       required />
                   </Form.Group>
-                  <Form.Group as={Col} md='3'>
+                  <Form.Group as={Col} lg={3} md={4} sm={6} xs={12}>
                     <Form.Label>Hora</Form.Label>
                     <Form.Select value={updateTime} className='text-center'
                       onChange={(e) => setUpdateTime(e.target.value)}
@@ -298,7 +305,7 @@ function ReservationCrudScreen({ jwt }) {
                       }
                     </Form.Select>
                   </Form.Group>
-                  <Form.Group as={Col} md='3'>
+                  <Form.Group as={Col} lg={3} md={4} sm={6} xs={12}>
                     <Form.Label>Comensales</Form.Label>
                     <Form.Control type='number' value={updateGuests} min={2} max={10} className='text-center'
                       onChange={(e) => setUpdateGuests(e.target.value)} required />

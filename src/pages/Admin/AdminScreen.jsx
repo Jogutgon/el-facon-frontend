@@ -37,14 +37,13 @@ useEffect(()=>{
 }, [jwt]);
 
   return (
-    <Container className='text-white my-5 py-5'>
-      <Row className='text-center'>
-        <Col>
+    <Container className='text-white text-center my-5 py-5 fira-sans-regular'>
+      
           <h1 className='py-4'>¡Bienvenido a tu panel!</h1>
-        </Col>
-      </Row>
+    
       <Row className='pt-5 justify-content-center g-4'>
-        <Col className='d-flex justify-content-center'>
+        <Col xxl={3} lg={4} md={6} sm={10} xs={12} 
+        className='d-flex justify-content-center'>
           <Card style={{ width: '16rem', cursor: 'pointer' }} className='bg-primary text-white text-center'
           onClick={() => navigate('/admin/users')}>
             <Card.Body>
@@ -62,7 +61,7 @@ useEffect(()=>{
           </Card>
         </Col>
 
-        <Col className='d-flex justify-content-center'>
+        <Col xxl={3} lg={4} md={6} sm={10} xs={12} className='d-flex justify-content-center'>
           <Card style={{ width: '16rem', cursor: 'pointer' }} className='bg-success text-white text-center'
           onClick={() => navigate('/admin/reservations')}>
             <Card.Body>
@@ -78,7 +77,7 @@ useEffect(()=>{
           </Card>
         </Col>
 
-        <Col className='d-flex justify-content-center'>
+        <Col xxl={3} lg={4} md={6} sm={10} xs={12} className='d-flex justify-content-center'>
           <Card style={{ width: '16rem', cursor: 'pointer' }} className='bg-danger text-white text-center'
           onClick={() => navigate('/admin/users')}>
             <Card.Body>

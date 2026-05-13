@@ -4,13 +4,13 @@ import MainSection from "../components/MainSection"
 import ReservaSection from "../components/ReservaSection"
 
 
-function HomeScreen() {
+function HomeScreen({authenticated, admin}) {
   return (
     <>
       <MainSection/>
       <GalerySection/>
       <ContactSection/>
-      <ReservaSection/>
+      <ReservaSection authenticated={authenticated} admin={admin}/>
     </>
   )
 }
