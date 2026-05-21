@@ -65,34 +65,40 @@ function RegisterScreen() {
                 type="text"
                 placeholder="Agrega un nombre de usuario"
                 onChange={(e) => setUsername(e.target.value)}
-                value={username} />
+                value={username}
+                required />
             </Form.Group>
             <Form.Group className="mb-2" controlId="formBasicFirstName">
               <Form.Label>Nombre</Form.Label>
               <Form.Control type="text"
                placeholder=" Ingresa tu nombre"
                onChange={(e) => setFirstName(e.target.value)}
-               value={firstName} />
+               value={firstName}
+               required />
             </Form.Group><Form.Group className="mb-2" controlId="formBasicLastName">
               <Form.Label>Apellido</Form.Label>
               <Form.Control type="text" 
               placeholder="Ingresa tu apellido"
               onChange={(e) => setLastName(e.target.value)}
-              value={lastName} />
+              value={lastName}
+              required />
             </Form.Group>
             <Form.Group className="mb-2" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" 
               placeholder="Ingresa tu email"
               onChange={(e) => setEmail(e.target.value)}
-              value={email} />
+              value={email}
+              required />
             </Form.Group>
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Contraseña</Form.Label>
               <Form.Control type="password" 
               placeholder="Ingresa tu contraseña"
               onChange={(e) => setPassword(e.target.value)} 
-              value={password}/>
+              value={password}
+              minLength={8}
+              required/>
             </Form.Group>
             <div className="d-flex justify-content-end">
               <Button className="mt-3" variant="success" type="submit">
