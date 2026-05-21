@@ -19,12 +19,16 @@ function App() {
   const [admin, setAdmin] = useState(false)
 
   const verifyAdmin = () => {
+    if(!jwt || jwt.split('.').length !== 3){
+      setAdmin(false);
+      return;
+    }
     try {
       const decodedToken = jwtDecode(jwt)
       setAdmin(decodedToken.isAdmin)
-      console.log("Se inicio sesion", decodedToken.email)
     } catch (error) {
       console.error("Error decoding JWT:", error)
+      setAdmin(false)
     }
 
   }
