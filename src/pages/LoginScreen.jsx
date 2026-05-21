@@ -41,10 +41,8 @@ function LoginScreen({ changeJwt }) {
     fetch(API_URL + "/auth/login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log("LOGIN RESULT:", result);
-
         if (!result || !result.access_token) {
-          console.error("Token invalido", result);
+          console.error("Token invalido");
           alert("Correo o contraseña incorrectos");
           return;
         }
@@ -60,10 +58,12 @@ function LoginScreen({ changeJwt }) {
             navigate('/user');
           }
         } catch (error) {
-          console.log("Error decodificando token", error);
+          console.error("Error decodificando token");
         }
       })
-      .catch((error) => console.error(error));
+      .catch(() => {
+        alert("Error al conectar con el servidor");
+      });
 
   }
 
