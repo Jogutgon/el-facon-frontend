@@ -120,6 +120,13 @@ function ReservationCrudScreen({ jwt }) {
     return selectDateTime < now
   }
 
+  const isPastReservation = (date, time) => {
+    const reservationDateTime = new Date(
+      `${date.split('T')[0]}T${time}`
+    );
+    return reservationDateTime < new Date();
+  }
+
   const handleSubmitUpdate = async (event) => {
     event.preventDefault()
     await updateReservation()
@@ -175,95 +182,103 @@ function ReservationCrudScreen({ jwt }) {
               <i className="bi bi-search"></i>
             </InputGroup.Text>
             <Form.Control
-            type='text'
-            placeholder='Buscar cliente...'
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}/>
+              type='text'
+              placeholder='Buscar cliente...'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)} />
           </InputGroup>
         </Col>
         <Col lg={4} md={6} xs={12} className='mb-2'>
-        <InputGroup>
-          <InputGroup.Text>
-          {/* <i class="bi bi-calendar3"></i> */}
-          <i className="bi bi-search"></i>
+          <InputGroup>
+            <InputGroup.Text>
+              {/* <i class="bi bi-calendar3"></i> */}
+              <i className="bi bi-search"></i>
 
-          </InputGroup.Text>
-          <Form.Control
-          type='date'
-          value={filterDate}
-          onChange={(e) => setFilterDate(e.target.value)}/>
-        </InputGroup>
+            </InputGroup.Text>
+            <Form.Control
+              type='date'
+              value={filterDate}
+              onChange={(e) => setFilterDate(e.target.value)} />
+          </InputGroup>
         </Col>
       </Row>
 
       <div className='table-responsive'>
 
-          <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre y apellido</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Comensales</th>
-            <th>Accion</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            reservations.length === 0 ? (
-              <tr>
-                <td colSpan="6">No hay reservas</td>
-              </tr>
-            ) : (
-              reservations
-              .filter( r => {
-                const fullName = `${r.user?.firstName || ""} ${r.user?.lastName || ""}`.toLowerCase();
-                const matchText = fullName.includes(search.toLowerCase());
-
-                const matchDate = filterDate
-                ? r.date.startsWith(filterDate) : true;
-                return matchText && matchDate;
-              }
-
-              )
-              .map((r, index) => (
-                <tr key={r._id}>
-                  <td>{index + 1}</td>
-
-                  <td>{r.user
-                    ? `${r.user.firstName} ${r.user.lastName}`
-                    : 'Usuario eliminado'
-                  }</td>
-                  <td>{formatDate(r.date)}</td>
-                  <td>{r.time}</td>
-                  <td>{r.guests}</td>
-                  <td>
-                    <div className='d-flex justify-content-center'>
-                      <Button variant='outline-primary' className='mx-1'
-                      title='Editar'
-                      onClick={() => {
-                        const formattedDate = r.date.split('T')[0];
-                        setUpdateId(r._id);
-                        setUpdateDate(formattedDate);
-                        setUpdateTime(r.time);
-                        setUpdateGuests(r.guests);
-
-                        isAvailable(formattedDate);
-                      }}>
-                      <i className="bi bi-pencil-square"></i>
-                    </Button>
-                    <Button variant='outline-danger'
-                    className='mx-1' 
-                      title='Eliminar' onClick={() => { handleShow(r._id) }}>
-                      <i className="bi bi-trash3"></i>
-                    </Button>
-                    </div>
-                  </td>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre y apellido</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Comensales</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              reservations.length === 0 ? (
+                <tr>
+                  <td colSpan="6">No hay reservas</td>
                 </tr>
-              )))}
-        </tbody>
-      </Table>
+              ) : (
+                reservations
+                  .filter(r => {
+                    const fullName = `${r.user?.firstName || ""} ${r.user?.lastName || ""}`.toLowerCase();
+                    const matchText = fullName.includes(search.toLowerCase());
+
+                    const matchDate = filterDate
+                      ? r.date.startsWith(filterDate) : true;
+                    return matchText && matchDate;
+                  }
+
+                  )
+                  .map((r, index) => (
+                    <tr key={r._id}>
+                      <td>{index + 1}</td>
+
+                      <td>{r.user
+                        ? `${r.user.firstName} ${r.user.lastName}`
+                        : 'Usuario eliminado'
+                      }</td>
+                      <td>{formatDate(r.date)}</td>
+                      <td>{r.time}</td>
+                      <td>{r.guests}</td>
+                      <td>
+                        <div className='d-flex justify-content-center'>
+                          <span 
+                          title={
+                                isPastReservation(r.date, r.time)
+                                  ? 'No se puede editar reservas pasadas'
+                                  : 'Editar'
+                              }>
+                            <Button variant='outline-primary' className='mx-1'
+                              disabled={isPastReservation(r.date, r.time)}
+                              onClick={() => {
+                                const formattedDate = r.date.split('T')[0];
+                                setUpdateId(r._id);
+                                setUpdateDate(formattedDate);
+                                setUpdateTime(r.time);
+                                setUpdateGuests(r.guests);
+
+                                isAvailable(formattedDate);
+                              }}>
+                              <i className="bi bi-pencil-square"></i>
+                            </Button>
+                          </span>
+
+                          <Button variant='outline-danger'
+                            className='mx-1'
+                            title='Eliminar' onClick={() => { handleShow(r._id) }}>
+                            <i className="bi bi-trash3"></i>
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  )))}
+          </tbody>
+        </Table>
 
       </div>
 
